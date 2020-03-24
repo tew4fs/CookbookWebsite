@@ -1,0 +1,75 @@
+<!DOCTYPE html> {% load static %}
+<html>
+
+<head>
+    <title>Sign Up</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/sign_up.css' %}" />
+</head>
+
+<body class="signup-body">
+    <!-- Start of Header -->
+    <header class="main-header">
+        <div class="logo">
+            <a href="/">C2S</a>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn"><i class="fas fa-bars"></i></button>
+            <div class="dropdown-content">
+                <a class="header-button" href="#">Home</a>
+                <a class="header-button" href="#">Appetizers</a>
+                <a class="header-button" href="#">Breakfast</a>
+                <a class="header-button" href="#">Dinner</a>
+                <a class="header-button" href="#">Desserts</a>
+            </div>
+        </div>
+
+        <ul class="header-links">
+            <a class="header-button" href="#">
+                <li class="button">Home</li>
+            </a>
+            <a class="header-button" href="#">
+                <li class="button">Appetizers</li>
+            </a>
+            <a class="header-button" href="#">
+                <li class="button">Breakfast</li>
+            </a>
+            <a class="header-button" href="#">
+                <li class="button">Dinner</li>
+            </a>
+            <a class="header-button" href="#">
+                <li class="button">Desserts</li>
+            </a>
+        </ul>
+        <a class="user" href="#"> <i class="far fa-user"></i></a>
+    </header>
+    <!-- End of Header -->
+
+    <div class="background-image">
+        <img src="{% static 'images/cupcakes.jpg' %}" alt="Cupcakes">
+    </div>
+    <div class="black-overlay"></div>
+
+    <div class="signup-box">
+        <form class="signup-form" action="../sign-up-create/" method="POST">
+            {% csrf_token %}
+            <div class="signup-label">Sign Up</div>
+            <input class="email-1" name="email_1" id="email_1" type=email placeholder="Enter Email" required="required">
+            <input class="email-2" name="email_2" id="email_2" type=email placeholder="Enter Email Again" onchange="checkEmailsMatch()" required="required">
+            <label class="email-label">Email</label>
+            <input class="password-1" name="password_1" id="password_1" type=password placeholder="Enter Password" required="required">
+            <input class="password-2" name="password_2" id="password_2" type=password placeholder="Enter Password Again" required="required">
+            <label class="password-label">Password</label>
+            <input class="first-name" name="first_name" type=text placeholder="First Name" required="required">
+            <label class="name-label">Name</label>
+            <input class="last-name" name="last_name" type=text placeholder="Last Name" required="required">
+            <input class="submit-button" type=submit value="Sign Up">
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="{% static 'js/sign_up.js' %}"></script>
+</body>
+
+</html>

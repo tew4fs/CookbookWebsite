@@ -1,0 +1,69 @@
+<!DOCTYPE html> {% load static %}
+<html>
+
+<head>
+    <title>Care2Sher</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/home.css' %}" />
+</head>
+
+<body class="main-body">
+    <!-- Start of Header -->
+    <header class="main-header">
+        <div class="logo">
+            <a href="/">C2S</a>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn"><i class="fas fa-bars"></i></button>
+            <div class="dropdown-content">
+                <a class="header-button" href="#">Home</a>
+                <a class="header-button" href="#">Appetizers</a>
+                <a class="header-button" href="#">Breakfast</a>
+                <a class="header-button" href="#">Dinner</a>
+                <a class="header-button" href="#">Desserts</a>
+            </div>
+        </div>
+
+        <ul class="header-links">
+            <a class="header-button" href="#">
+                <li class="button">Home</li>
+            </a>
+            <a class="header-button" href="#">
+                <li class="button">Appetizers</li>
+            </a>
+            <a class="header-button" href="#">
+                <li class="button">Breakfast</li>
+            </a>
+            <a class="header-button" href="#">
+                <li class="button">Dinner</li>
+            </a>
+            <a class="header-button" href="#">
+                <li class="button">Desserts</li>
+            </a>
+        </ul>
+        <a class="user" href="#"> <i class="far fa-user"></i></a>
+    </header>
+    <img src="{% static 'images/doughnuts.jpg' %}" alt="Doughnuts">
+    <div class="black-overlay"></div>
+    <!-- End of Header -->
+    <div class="init-container">
+        <div class="init-image">
+            <h1 class="init-title">Community Cookbooks</h1>
+            <div class="init-descrip">
+                Say no more to losing recipes. Community Cookbooks allows for ease of storage of all your favorite recipes. Store a recipe in seconds and categorize them so they are quick to find. The best part about it? Share your cookbooks with friends and family so
+                that everyone can use those precious recipes that Mom used to make.
+            </div>
+            <div class="get-started">
+                <a class="go-to-login" href="get-started/">
+                    <button class="init-get-started">
+                          <b>Log In To Get Started</b>
+                     </button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+
+</html>
