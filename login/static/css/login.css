@@ -1,296 +1,132 @@
-.login-body {
-    position: absolute;
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+.form-label-group {
+    margin: 20px;
+}
+
+.form-control {
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-color: rgba(0, 0, 0, 0.4);
+    border-radius: 0%;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: coral;
+}
+
+#sign-up-link {
+    margin-bottom: 10px;
+}
+
+body {
+    /* The image used */
+    background-image: url("../images/cupcakes.jpg");
+    /* Full height */
     height: 100%;
-    width: 100%;
-    margin: 0px;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#login-box {
+    border-radius: 7%;
+}
+
+#button {
     background-color: coral;
-    overflow-y: auto;
-    overflow-x: auto;
-    font-family: Arial, Helvetica, sans-serif;
+    color: white;
 }
 
-.logo {
-    display: none;
+#button:hover {
+    background-color: rgb(230, 89, 38);
 }
 
-.dropbtn {
+a {
+    color: coral;
+}
+
+a:hover {
+    color: rgb(230, 89, 38);
+}
+
+
+/*---Media Queries --*/
+
+@media (max-width: 992px) {}
+
+@media (max-width: 768px) {}
+
+@media (max-width: 576px) {}
+
+
+/*---Firefox Bug Fix --*/
+
+.carousel-item {
+    transition: -webkit-transform 0.5s ease;
+    transition: transform 0.5s ease;
+    transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+}
+
+
+/*--- Fixed Background Image --*/
+
+figure {
+    position: relative;
+    width: 100%;
+    height: 60%;
+    margin: 0!important;
+}
+
+.fixed-wrap {
+    clip: rect(0, auto, auto, 0);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#fixed {
+    background-image: url('img/mac.png');
     position: fixed;
-    left: 90%;
-    top: 2%;
-    font-size: 28px;
-    color: white;
-    background-color: transparent;
-    border: 0px;
-    z-index: 1;
-}
-
-.background-image img {
-    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 50%;
-    margin-top: 0px;
-    opacity: .5;
-    left: 0px;
-    top: 0px;
-}
-
-.black-overlay {
-    position: absolute;
-    background-color: black;
-    width: 100%;
-    height: 50%;
-    margin-top: 0px;
-    left: 0px;
-    top: 0px;
-}
-
-.dropdown-content {
-    display: none;
-}
-
-.header-links,
-.user {
-    display: none;
-}
-
-.black-overlay {
-    display: none;
-}
-
-.background-image {
-    display: none;
-}
-
-.login-box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    width: 400px;
-    height: 350px;
-    border-radius: 10%;
-}
-
-.login-label {
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: rgba(0, 0, 0, .85);
-    font-size: 36px;
-}
-
-.email {
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 0px;
-    border-bottom: 2px solid rgba(0, 0, 0, .3);
-    width: 250px;
-    height: 40px;
-}
-
-.email:focus {
-    outline: none;
-}
-
-.email-label {
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 250px;
-    height: 20px;
-    color: rgba(0, 0, 0, .85);
-    font-size: 18px;
-}
-
-.password {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 0px;
-    border-bottom: 2px solid rgba(0, 0, 0, .3);
-    width: 250px;
-    height: 40px;
-}
-
-.password:focus {
-    outline: none;
-}
-
-.password-label {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 250px;
-    height: 20px;
-    color: rgba(0, 0, 0, .85);
-    font-size: 18px;
-}
-
-a.forgot-password-label {
-    position: absolute;
-    top: 70%;
-    left: 33%;
-    color: coral !important;
-    font-size: 14px;
-    transform: translate(-50%, -50%);
-}
-
-a.forgot-password-label:link {
-    color: coral !important;
-}
-
-a.forgot-password-label:visited {
-    color: coral !important;
-}
-
-.submit-button {
-    position: absolute;
-    top: 80%;
-    left: 72%;
-    transform: translate(-50%, -50%);
-    width: 80px;
-    height: 40px;
-    font-size: 20px;
-    color: white;
-    background-color: coral;
-    border: 0px;
-    border-radius: 5%;
-    cursor: pointer;
-}
-
-.signup-label {
-    position: absolute;
-    top: 95%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 14px;
-}
-
-a.signup-button:link {
-    color: coral !important;
-}
-
-a.signup-button:visited {
-    color: coral !important;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 
-/* End of Phone CSS */
+/*--- Bootstrap Padding Fix --*/
 
-
-/* Start of Tablet CSS */
-
-@media only screen and (min-width: 670px) {}
-
-
-/* End of Tablet CSS */
-
-
-/* Start of Computer CSS */
-
-@media only screen and (min-width: 1000px) {
-    .dropbtn {
-        display: none;
-    }
-    .black-overlay {
-        display: inline;
-    }
-    .background-image {
-        display: inline;
-    }
-    /* Start of Header CSS */
-    .main-header {
-        position: absolute;
-        font-family: Arial, Helvetica, sans-serif;
-        top: 0px;
-        left: 0px;
-        font-size: 21px;
-        background-color: rgba(255, 127, 80, .9);
-        height: 38px;
-        margin-top: 0px;
-        width: 100%;
-        box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, .2);
-        z-index: 1;
-    }
-    a:link {
-        color: rgba(253, 253, 253, 1);
-        text-decoration: none;
-    }
-    a:visited {
-        color: rgba(253, 253, 253, 1);
-    }
-    .header-links {
-        display: inline;
-        list-style-type: none;
-        margin: 0px;
-    }
-    .header-button {
-        position: relative;
-        margin-top: 0px;
-        display: inline-block;
-        font-weight: 200%;
-        margin-bottom: 0px;
-        padding-left: 2.5%;
-        padding-right: 2.5%;
-        align-items: center;
-        left: 15%;
-        height: 100%;
-    }
-    .button {
-        position: relative;
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
-    .header-button:hover {
-        background-color: rgba(252, 98, 42, .8);
-    }
-    .logo {
-        position: absolute;
-        display: inline;
-        font-family: cursive;
-        text-align: center;
-        left: 0%;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        width: 100px;
-        height: 100%;
-        box-shadow: inset 0px 0px 10px 3px rgba(0, 0, 0, .15);
-    }
-    .user {
-        position: absolute;
-        display: inline;
-        left: 95%;
-        height: 100%;
-        margin-top: 0px;
-        top: 0px;
-    }
-    .user:hover {
-        background-color: rgb(252, 98, 42);
-    }
-    .user i {
-        position: relative;
-        top: 5px;
-        padding-right: 7px;
-        padding-left: 7px;
-    }
-    /* End of Header CSS */
-    .background-image img {
-        height: 750px;
-        width: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-    .black-overlay {
-        width: 100%;
-        height: 750px;
-        z-index: -1;
-    }
+[class*="col-"] {
+    padding: 1rem;
 }
+
+
+/*
+Extra small (xs) devices (portrait phones, less than 576px)
+No media query since this is the default in Bootstrap
+
+Small (sm) devices (landscape phones, 576px and up)
+@media (min-width: 576px) { ... }
+
+Medium (md) devices (tablets, 768px and up)
+@media (min-width: 768px) { ... }
+
+Large (lg) devices (desktops, 992px and up)
+@media (min-width: 992px) { ... }
+
+Extra (xl) large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { ... }
+*/
