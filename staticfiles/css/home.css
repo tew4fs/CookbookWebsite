@@ -1,0 +1,264 @@
+/* Start of Phone CSS */
+
+.main-body {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    top: 0px;
+    background-color: coral;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.logo {
+    display: none;
+}
+
+.dropbtn {
+    position: fixed;
+    left: 90%;
+    top: 2%;
+    font-size: 28px;
+    color: white;
+    background-color: transparent;
+    border: 0px;
+    z-index: 1;
+}
+
+.init-container {
+    position: relative;
+    text-align: center;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+}
+
+img {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    margin-top: 0px;
+    opacity: .5;
+    left: 0px;
+    top: 0px;
+}
+
+.black-overlay {
+    position: absolute;
+    background-color: black;
+    z-index: -1;
+    width: 100%;
+    height: 50%;
+    margin-top: 0px;
+    left: 0px;
+    top: 0px;
+}
+
+.dropdown-content {
+    display: none;
+}
+
+.header-links,
+.user {
+    display: none;
+}
+
+.init-title {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    position: relative;
+    left: 50%;
+    padding: 5px;
+    margin-bottom: 20px;
+    color: white;
+    transform: translate(-50%, 0%);
+    font-size: 40px;
+}
+
+.init-descrip {
+    position: relative;
+    width: 75%;
+    left: 50%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    transform: translate(-50%, 0%);
+    font-size: 26px;
+    font-style: oblique;
+    color: white;
+    line-height: 130%;
+    font-weight: 1000;
+    letter-spacing: 2px;
+}
+
+.get-started {
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.init-get-started {
+    width: 200px;
+    height: 40px;
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    font-size: 18px;
+}
+
+.init-get-started:hover {
+    text-decoration: underline;
+}
+
+
+/* End of Phone CSS */
+
+
+/* Start of Tablet CSS */
+
+@media only screen and (min-width: 670px) {
+    .init-title {
+        font-size: 50px;
+        margin-bottom: 60px;
+        margin-top: 90px;
+    }
+    .init-descrip {
+        font-size: 30px;
+        margin-bottom: 60px;
+        margin-top: 60px;
+        width: 75%;
+    }
+    .init-get-started {
+        font-size: 24px;
+        margin-bottom: 60px;
+        margin-top: 60px;
+        width: 300px;
+        height: 50px;
+    }
+}
+
+
+/* End of Tablet CSS */
+
+
+/* Start of Computer CSS */
+
+@media only screen and (min-width: 1000px) {
+    .dropbtn {
+        display: none;
+    }
+    /* Start of Header CSS */
+    .main-header {
+        position: absolute;
+        font-family: Arial, Helvetica, sans-serif;
+        top: 0px;
+        left: 0px;
+        font-size: 21px;
+        background-color: rgba(255, 127, 80, .9);
+        height: 38px;
+        margin-top: 0px;
+        width: 100%;
+        box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, .2);
+        z-index: 1;
+    }
+    a:link {
+        color: rgba(253, 253, 253, 1);
+        text-decoration: none;
+    }
+    a:visited {
+        color: rgba(253, 253, 253, 1);
+    }
+    .header-links {
+        display: inline;
+        list-style-type: none;
+        margin: 0px;
+    }
+    .header-button {
+        position: relative;
+        margin-top: 0px;
+        display: inline-block;
+        font-weight: 200%;
+        margin-bottom: 0px;
+        padding-left: 2.5%;
+        padding-right: 2.5%;
+        align-items: center;
+        left: 15%;
+        height: 100%;
+    }
+    .button {
+        position: relative;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .header-button:hover {
+        background-color: rgba(252, 98, 42, .8);
+    }
+    .logo {
+        position: absolute;
+        display: inline;
+        font-family: cursive;
+        text-align: center;
+        left: 0%;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        width: 100px;
+        height: 100%;
+        box-shadow: inset 0px 0px 10px 3px rgba(0, 0, 0, .15);
+    }
+    .user {
+        position: absolute;
+        display: inline;
+        left: 95%;
+        height: 100%;
+        margin-top: 0px;
+        top: 0px;
+    }
+    .user:hover {
+        background-color: rgb(252, 98, 42);
+    }
+    .user i {
+        position: relative;
+        top: 5px;
+        padding-right: 7px;
+        padding-left: 7px;
+    }
+    /* End of Header CSS */
+    .init-container {
+        position: relative;
+        text-align: center;
+        color: white;
+    }
+    img {
+        height: 750px;
+        width: 100%;
+    }
+    .black-overlay {
+        height: 750px;
+        width: 100%;
+    }
+    .init-title {
+        font-size: 55px;
+    }
+    .init-descrip {
+        font-size: 35px;
+    }
+    .get-started {
+        left: 50%;
+        top: 78%;
+        height: auto;
+        transform: translate(-50%, -50%);
+    }
+    .init-get-started {
+        width: 300px;
+        height: 60px;
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+        font-size: 22px;
+        margin-top: 100px;
+    }
+    .init-get-started:hover {
+        text-decoration: underline;
+    }
+}
