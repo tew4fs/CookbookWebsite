@@ -12,25 +12,40 @@
 </head>
 
 <body>
-
     <!-- Navigation -->
     <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="{% static 'images/CommunityCookbooks.png' %}" width="200px"></a>
+            <a class="navbar-brand" href="/"><img src="{% static 'images/CommunityCookbooks.png' %}" width="200px"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-targer="#navbar-Responsive">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbar-Responsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Appetizers</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Breakfast</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Dinner</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Desserts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../recipes/home/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../recipes/appetizers/">Appetizers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../recipes/breakfast/">Breakfast</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../recipes/dinner/">Dinner</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../recipes/desserts/">Desserts</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Account
+                        </a> {% if user.is_authenticated %}
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Account</a>
+                            <a class="dropdown-item" href="#">Settings</a>
+                            <a class="dropdown-item" href="/get-started/logout/">Log out</a>
+                        </div>
+                        {% else %}
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="/get-started/login/">Login</a>
+                        </div>
+                        {% endif %}
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
+
 
     <!-- Login box -->
     <div class="container">
@@ -38,31 +53,35 @@
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
                 <div class="card card-signin my-5" id="signup-box">
                     <div class="card-body">
+                        <a class="back-button" href="../"><i class="fas fa-arrow-circle-left fa-lg"></i></a>
                         <h3 class="card-title text-center">Sign Up</h3>
-                        <form class="form-signin" action="../sign-up-create/" method="POST">
+                        <div class="card-subtitle text-center" id="incorrect">{{ incorrect }}</div>
+                        <form class="form-signin" action="../sign-up/" method="POST">
                             {% csrf_token %}
-                            <div class="form-label-group">
-                                <label for="email">Email</label>
-                                <input class="form-control" type="email" name="email_1" id="email_1" placeholder="Enter Email" required>
-                            </div>
-                            <div class="form-label-group" id="email2-label">
-                                <input class="form-control" type="email" name="email_2" id="email_2" placeholder="Enter Email Again" required>
-                            </div>
-                            <div class="form-label-group">
-                                <label for="password">Password</label>
-                                <input class="form-control" type="password" name="password_1" id="password_1" placeholder="Enter Password" required>
-                            </div>
-                            <div class="form-label-group" id="password2-label">
-                                <input class="form-control" type="password" name="password_2" id="password_2" placeholder="Enter Password Again" required>
-                            </div>
-                            <div class="form-label-group">
-                                <label for="first_name">Name</label>
-                                <input class="form-control" type="text" name="first_name" id="first_name" placeholder="First Name" required>
-                            </div>
-                            <div class="form-label-group" id="last-name-label">
-                                <input class="form-control" type="text" name="last_name" id="last_name" placeholder="Last Name" required>
-                            </div>
-                            <button class="btn btn-lg btn-block text-uppercase" id="button" type="submit">Sign Up</button>
+                            <fieldset autocomplete="off">
+                                <div class="form-label-group">
+                                    <label for="email">Email</label>
+                                    <input class="form-control" type="email" name="email_1" id="email_1" placeholder="Enter Email" required>
+                                </div>
+                                <div class="form-label-group" id="email2-label">
+                                    <input class="form-control" type="email" name="email_2" id="email_2" placeholder="Enter Email Again" required>
+                                </div>
+                                <div class="form-label-group">
+                                    <label for="password">Password</label>
+                                    <input class="form-control" type="password" name="password_1" id="password_1" placeholder="Enter Password" required>
+                                </div>
+                                <div class="form-label-group" id="password2-label">
+                                    <input class="form-control" type="password" name="password_2" id="password_2" placeholder="Enter Password Again" required>
+                                </div>
+                                <div class="form-label-group">
+                                    <label for="first_name">Name</label>
+                                    <input class="form-control" type="text" name="first_name" id="first_name" placeholder="First Name" required>
+                                </div>
+                                <div class="form-label-group" id="last-name-label">
+                                    <input class="form-control" type="text" name="last_name" id="last_name" placeholder="Last Name" required>
+                                </div>
+                                <button class="btn btn-lg btn-block text-uppercase" id="button" type="submit" disabled>Sign Up</button>
+                            </fieldset>
                         </form>
                     </div>
                 </div>

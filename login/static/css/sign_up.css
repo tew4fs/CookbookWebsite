@@ -36,11 +36,28 @@ body {
 }
 
 #button:hover {
-    background-color: rgb(230, 89, 38);
+    background-color: #ED5D28;
 }
 
 #signup-box {
     border-radius: 7%;
+}
+
+a {
+    color: coral;
+}
+
+a:hover {
+    color: #ED5D28;
+}
+
+#incorrect {
+    color: rgb(224, 0, 0);
+    font-weight: bold;
+}
+
+.back-button {
+    position: absolute;
 }
 
 
