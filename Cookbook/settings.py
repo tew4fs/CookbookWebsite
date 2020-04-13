@@ -140,3 +140,4 @@ STATICFILES_DIRS = (
 )
 
 django_heroku.settings(locals())
+SITE_ID = 1
