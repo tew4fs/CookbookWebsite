@@ -10,7 +10,7 @@ def get_image_path(instance, filename):
 class Recipe(models.Model):
     food = models.CharField(max_length=80, default="")
     food_type = models.CharField(max_length=50, default="")
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=300)
     picture = models.ImageField(upload_to=get_image_path, null=True, blank=True)
     ingredients = ArrayField(
         models.CharField(max_length=80),

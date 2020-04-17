@@ -11,16 +11,64 @@ def index(request):
     return HttpResponseRedirect('home/')
 
 def home(request):
-    recipes = Recipe.objects.all()
-    for rec in recipes:
-        print(type(recipes))
-        if request.user.username not in rec.users:
-            recipes = recipes.exclude(pk=rec.pk)
-    content = {'recipes': recipes}
+    query = request.GET.get("q")
+    if query:
+        recipes = Recipe.objects.filter(food__contains=query)
+        recipes_query_descriptions = Recipe.objects.filter(description__contains=query)
+        recipes = list(recipes)
+        recipes_query_descriptions = list(recipes_query_descriptions)
+        for rec in recipes_query_descriptions:
+            if rec not in recipes:
+                recipes.append(rec)
+        for rec in recipes:
+            if request.user.username not in rec.users:
+                recipes = recipes.exclude(pk=rec.pk)
+        content = {'recipes': recipes}
+    else:
+        appetizers = Recipe.objects.filter(food_type="Appetizer")
+        breakfast = Recipe.objects.filter(food_type="Breakfast")
+        dinner = Recipe.objects.filter(food_type="Dinner")
+        desserts = Recipe.objects.filter(food_type="Dessert")
+        for rec in appetizers:
+            if request.user.username not in rec.users:
+                appetizers = appetizers.exclude(pk=rec.pk)
+        appetizers = appetizers[0:4]
+        for rec in breakfast:
+            if request.user.username not in rec.users:
+                breakfast = breakfast.exclude(pk=rec.pk)
+        breakfast = breakfast[0:4]
+        for rec in dinner:
+            if request.user.username not in rec.users:
+                dinner = dinner.exclude(pk=rec.pk)
+        dinner = dinner[0:4]
+        for rec in desserts:
+            if request.user.username not in rec.users:
+                desserts = desserts.exclude(pk=rec.pk)
+        desserts = desserts[0:4]
+        content = {'appetizers': appetizers, 'breakfast': breakfast, 'dinner': dinner, 'desserts': desserts}
     return render(request, 'recipe/home.html', content)
 
 def appetizers(request):
-    return render(request, 'recipe/appetizers.html')
+    query = request.GET.get("q")
+    if query:
+        recipes = Recipe.objects.filter(food__contains=query)
+        recipes_query_descriptions = Recipe.objects.filter(description__contains=query)
+        recipes = list(recipes)
+        recipes_query_descriptions = list(recipes_query_descriptions)
+        for rec in recipes_query_descriptions:
+            if rec not in recipes:
+                recipes.append(rec)
+        for rec in recipes:
+            if request.user.username not in rec.users:
+                recipes = recipes.exclude(pk=rec.pk)
+        content = {'recipes': recipes}
+    else:
+        appetizers = Recipe.objects.filter(food_type="Appetizer")
+        for rec in appetizers:
+            if request.user.username not in rec.users:
+                appetizers = appetizers.exclude(pk=rec.pk)
+        content = {'appetizers': appetizers}
+    return render(request, 'recipe/appetizers.html', content)
 
 def breakfast(request):
     return render(request, 'recipe/breakfast.html')
