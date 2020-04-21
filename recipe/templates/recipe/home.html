@@ -65,12 +65,12 @@
                     <img class="card-img-top" src="{{ item.picture.url }}" alt="{{ item.food }}">
                     <div class="card-img-overlay">
                         <h4 class="card-title">{{ item.food }}</h4>
-                        {% if item.description|length > 50 %}
+                        {% if item.|length > 50 %}
                         <p class="card-text">{{ item.description|slice:"0:50" }} </p>
                         {% else %}
                         <p class="card-text">{{ item.description }} </p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' pk=item.pk %}" class="btn btn-outline-secondary">View Recipe</a>
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
                     </div>
                     {% else %}
                     <div class="card-body">
@@ -80,7 +80,7 @@
                         {% else %}
                         <p class="card-text">{{ item.description }} </p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' pk=item.pk %}" class="btn btn-outline-secondary">View Recipe</a>
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
                     </div>
                     {% endif %}
                 </div>
@@ -104,7 +104,7 @@
                         {% else %}
                         <p class="card-text">{{ item.description }} </p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' pk=item.pk %}" class="btn btn-outline-secondary">View Recipe</a>
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
                     </div>
                     {% else %}
                     <div class="card-body">
@@ -114,7 +114,7 @@
                         {% else %}
                         <p class="card-text">{{ item.description }} </p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' pk=item.pk %}" class="btn btn-outline-secondary">View Recipe</a>
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
                     </div>
                     {% endif %}
                 </div>
@@ -138,7 +138,7 @@
                         {% else %}
                         <p class="card-text">{{ item.description }} </p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' pk=item.pk %}" class="btn btn-outline-secondary">View Recipe</a>
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
                     </div>
                     {% else %}
                     <div class="card-body">
@@ -148,7 +148,7 @@
                         {% else %}
                         <p class="card-text">{{ item.description }} </p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' pk=item.pk %}" class="btn btn-outline-secondary">View Recipe</a>
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
                     </div>
                     {% endif %}
                 </div>
@@ -172,7 +172,7 @@
                         {% else %}
                         <p class="card-text">{{ item.description }} </p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' pk=item.pk %}" class="btn btn-outline-secondary">View Recipe</a>
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
                     </div>
                     {% else %}
                     <div class="card-body">
@@ -182,7 +182,7 @@
                         {% else %}
                         <p class="card-text">{{ item.description }} </p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' pk=item.pk %}" class="btn btn-outline-secondary">View Recipe</a>
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
                     </div>
                     {% endif %}
                 </div>
@@ -205,7 +205,7 @@
                         {% else %}
                         <p class="card-text">{{ item.description }} </p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' pk=item.pk %}" class="btn btn-outline-secondary">View Recipe</a>
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
                     </div>
                     {% else %}
                     <div class="card-body">
@@ -215,7 +215,7 @@
                         {% else %}
                         <p class="card-text">{{ item.description }} </p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' pk=item.pk %}" class="btn btn-outline-secondary">View Recipe</a>
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
                     </div>
                     {% endif %}
                 </div>

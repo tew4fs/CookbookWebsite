@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/recipes-list.css' %}">
 </head>
 
 <body>
@@ -45,6 +46,83 @@
         </div>
     </nav>
 
+
+    <nav class="navbar navbar-light" id="recipe-bar">
+        <a href="{% url 'create_recipe' %}"><button class="btn btn-outline-secondary mr-auto" id="create-button">Create Recipe</button></a>
+        <form class="form-inline ml-auto">
+            <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search" aria-label="Search" value="{{request.GET.q}}">
+            <button class="btn btn-outline-secondary my-2 my-sm-0" id="search-button" type="submit">Search</button>
+        </form>
+    </nav>
+
+    {% if desserts %}
+    <span class="display-4" id="food-header">Desserts</span>
+    <div class="container-fluid padding">
+        <div class="row padding">
+            {% for item in desserts %}
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" id="card-rec">
+                <div class="card">
+                    {% if item.picture %}
+                    <img class="card-img-top" src="{{ item.picture.url }}" alt="{{ item.food }}">
+                    <div class="card-img-overlay">
+                        <h4 class="card-title">{{ item.food }}</h4>
+                        {% if item.description|length > 50 %}
+                        <p class="card-text">{{ item.description|slice:"0:50" }} </p>
+                        {% else %}
+                        <p class="card-text">{{ item.description }} </p>
+                        {% endif %}
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
+                    </div>
+                    {% else %}
+                    <div class="card-body">
+                        <h4 class="card-title">{{ item.food }}</h4>
+                        {% if item.description|length > 50 %}
+                        <p class="card-text">{{ item.description|slice:"0:50" }}... </p>
+                        {% else %}
+                        <p class="card-text">{{ item.description }} </p>
+                        {% endif %}
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% elif recipes %}
+    <div class="container-fluid padding">
+        <div class="row padding">
+            {% for item in recipes %}
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" id="card-rec">
+                <div class="card">
+                    {% if item.picture %}
+                    <img class="card-img-top" src="{{ item.picture.url }}" alt="{{ item.food }}">
+                    <div class="card-img-overlay">
+                        <h4 class="card-title">{{ item.food }}</h4>
+                        {% if item.description|length > 50 %}
+                        <p class="card-text">{{ item.description|slice:"0:50" }}... </p>
+                        {% else %}
+                        <p class="card-text">{{ item.description }} </p>
+                        {% endif %}
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
+                    </div>
+                    {% else %}
+                    <div class="card-body">
+                        <h4 class="card-title">{{ item.food }}</h4>
+                        {% if item.description|length > 50 %}
+                        <p class="card-text">{{ item.description|slice:"0:50" }}... </p>
+                        {% else %}
+                        <p class="card-text">{{ item.description }} </p>
+                        {% endif %}
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %} Uh Oh, looks like you have no recipes. {% endif %}
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>

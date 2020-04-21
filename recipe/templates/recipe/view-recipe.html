@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" text="text/css" href="{% static 'css/view-recipe.css' %}">
 </head>
 
 <body>
@@ -46,9 +47,57 @@
     </nav>
 
 
-    {{ recipe.food }}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="card" id="food-description-box">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">
+                            {{ recipe.food }}
+                        </h3>
+                        {% if recipe.picture %}
+                        <img id="food-img" src="{{ recipe.picture }}" alt="{{ recipe.food }}"> {% endif %}
+                        <div class="card-text text-center">
+                            {{ recipe.description }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="card" id="ingredient-box">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">
+                            Ingredients
+                        </h3>
+                        <div class="card-text">
+                            <ol>
+                                {% for i in recipe.ingredients %}
+                                <li> {{ i }}</li> {% endfor %}
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="card" id="steps-box">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">
+                            Steps
+                        </h3>
+                        <div class="card-text">
+                            <ol>
+                                {% for i in recipe.steps %}
+                                <li> {{ i }}</li> {% endfor %}
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="{% static 'js/view-recipe.js' %}" type="text/javascript"></script>
 </body>
 
 </html>
