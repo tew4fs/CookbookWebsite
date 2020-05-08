@@ -1,69 +1,81 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+body {
+    background: url("../images/texture.png") repeat #cfcfcf;
+}
+
 #main-navbar {
     background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
     background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
     background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
 }
 
-body {
-    /* The image used */
-    background-image: url("../images/cupcakes.jpg");
-    /* Full height */
-    height: 100%;
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.card {
+    border-radius: 4%;
+    border-color: white;
 }
 
-.form-control {
-    border-top: 0px;
-    border-left: 0px;
-    border-right: 0px;
-    border-color: rgba(0, 0, 0, 0.4);
-    border-radius: 0%;
+textarea,
+select,
+input,
+button {
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
-.form-control:focus {
-    box-shadow: none;
-    border-color: coral;
-}
-
-#email2-label,
-#password2-label,
-#last-name-label {
-    margin-top: 10px;
+.container {
+    margin-top: 30px;
 }
 
 #button {
-    margin-top: 10px;
     background-color: coral;
     color: white;
+    height: 70px;
+    border-color: coral;
 }
 
 #button:hover {
-    background-color: #ED5D28;
-}
-
-#signup-box {
-    border-radius: 7%;
-}
-
-a {
+    background-color: white;
     color: coral;
 }
 
-a:hover {
-    color: #ED5D28;
+#button:focus {
+    box-shadow: none !important;
 }
 
-#incorrect {
-    color: rgb(224, 0, 0);
-    font-weight: bold;
+textarea:focus,
+input:focus,
+select:focus {
+    box-shadow: none !important;
+    border-color: coral !important;
 }
 
-.back-button {
-    position: absolute;
+#save {
+    margin-right: 50px;
+    color: #FF7F50;
+    background-color: white;
+    border-color: white;
+}
+
+#save:hover {
+    background-color: #FF7F50;
+    color: white;
+}
+
+#save:focus {
+    box-shadow: none !important;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+#file {
+    margin-top: 5px;
+}
+
+#food-pic {
+    width: 200px;
+    height: 200px;
 }
 
 

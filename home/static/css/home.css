@@ -18,6 +18,12 @@
     padding-bottom: 1rem;
 }
 
+#main-navbar {
+    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
+    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
+    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
+}
+
 footer {
     background-color: #333e46;
     color: white;
@@ -65,6 +71,10 @@ footer {
     color: coral;
     border-color: white;
     background-color: white;
+}
+
+.dropdown {
+    cursor: pointer;
 }
 
 

@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+#main-navbar {
+    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
+    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
+    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
+}
+
 .form-label-group {
     margin: 20px;
 }

@@ -8,17 +8,17 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/home_recipe.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home-recipe.css' %}">
 </head>
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="main-navbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'landing' %}"><img src="{% static 'images/CommunityCookbooks.png' %}" width="200px"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-targer="#navbar-Responsive">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <span class="navbar-toggler-icon"></span>
+        </button>
             <div class="collapse navbar-collapse" id="navbar-Responsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
@@ -28,11 +28,19 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'desserts' %}">Desserts</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Account
-                            </a> {% if user.is_authenticated %}
+                        Account
+                        {% if notifications %}
+                            <span class="badge badge-danger">{{ notifications|length }}</span>
+                        {% endif %}
+                    </a> {% if user.is_authenticated %}
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Account</a>
-                            <a class="dropdown-item" href="#">Settings</a>
+                            <a class="dropdown-item" href="{% url 'notifications' %}">
+                            Notifications
+                            {% if notifications %}
+                            <span class="badge badge-danger">{{ notifications|length }}</span>
+                            {% endif %}
+                        </a>
+                            <a class="dropdown-item" href="{% url 'settings' %}">Settings</a>
                             <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
                         </div>
                         {% else %}
@@ -47,9 +55,9 @@
     </nav>
 
     <nav class="navbar navbar-light" id="recipe-bar">
-        <a href="{% url 'create_recipe' %}"><button class="btn btn-outline-secondary mr-auto" id="create-button">Create Recipe</button></a>
-        <form class="form-inline ml-auto">
-            <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search" aria-label="Search" value="{{request.GET.q}}">
+        <a href="{% url 'create_recipe' %}" class="mr-auto" id="create-link"><button class="btn btn-outline-secondary" id="create-button">Create Recipe</button></a>
+        <form class="form-inline ml-auto" id="search-form-box">
+            <input class="form-control mr-sm-2" id="search-box" type="search" name="q" placeholder="Search" aria-label="Search" value="{{request.GET.q}}">
             <button class="btn btn-outline-secondary my-2 my-sm-0" id="search-button" type="submit">Search</button>
         </form>
     </nav>
@@ -223,7 +231,9 @@
             {% endfor %}
         </div>
     </div>
-    {% else %} Uh Oh, looks like you have no recipes. {% endif %}
+    {% else %}
+    <div class="no-recipes">Uh Oh, looks like you have no recipes.</div> {% endif %}
+
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>

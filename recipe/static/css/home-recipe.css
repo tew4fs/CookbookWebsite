@@ -9,45 +9,110 @@ body {
     background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
 }
 
-.btn-outline-secondary {
+.card-img-top {
+    height: 198px;
+    border-radius: 2%;
+    border-color: #fff;
+}
+
+#card-rec {
+    margin-top: 20px;
+}
+
+.card {
+    color: #FFF;
+    background-color: #f37546;
+    border-color: #FFF;
+    width: 250px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card-img-top {
+    filter: brightness(80%)
+}
+
+.card-body a,
+.card-img-overlay a {
     color: #FF7F50;
     border-color: white;
     background-color: white;
 }
 
-.btn-outline-secondary:hover {
+.card-body a:hover,
+.card-img-overlay a:hover {
     color: #fff;
     border-color: white;
-    background-color: #FF7F50;
+    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
+    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
+    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
 }
 
-.btn-outline-secondary:active {
-    color: #fff;
+.card-body a:active,
+.card-img-overlay a:active {
+    color: white !important;
     border-color: white !important;
-    background-color: #FF7F50 !important;
+    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
+    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
+    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
     box-shadow: none !important;
 }
 
-.btn-outline-secondary:focus {
+.card-body a:focus,
+.card-img-overlay a:focus {
+    color: white !important;
+    border-color: white !important;
+    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
+    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
+    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
+    box-shadow: none !important;
+}
+
+#food-header {
     color: #fff;
+    font-weight: 700;
+    margin-left: 25px;
+    font-size: 40px;
+}
+
+#recipe-bar {
+    background-color: transparent;
+}
+
+#search-button,
+#create-button {
+    color: #FF7F50;
+    background-color: white;
     border-color: white;
+    margin-bottom: 5px;
+}
+
+#search-button:hover,
+#create-button:hover {
+    color: white;
     background-color: #FF7F50;
+    border-color: white;
+}
+
+#search-button:focus,
+#create-button:focus,
+#search-box:focus {
     box-shadow: none;
 }
 
-#food-img {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 100%;
+#search-box:focus {
+    border-color: #FF7F50;
 }
 
-.card {
-    font-size: 22px;
-}
-
-#ingredient,
-#step {
-    margin-top: 10px;
+.no-recipes {
+    color: white;
+    font-weight: 700;
+    font-size: 34px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 
@@ -55,7 +120,14 @@ body {
 
 @media (max-width: 992px) {}
 
-@media (max-width: 768px) {}
+@media (max-width: 768px) {
+    #search-form-box,
+    #search-button,
+    #create-link {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
 
 @media (max-width: 576px) {}
 

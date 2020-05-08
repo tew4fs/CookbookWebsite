@@ -1,19 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+body {
+    background: url("../images/texture.png") repeat #cfcfcf;
+}
+
 #main-navbar {
     background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
     background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
     background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
-}
-
-body {
-    /* The image used */
-    background-image: url("../images/cupcakes.jpg");
-    /* Full height */
-    height: 100%;
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 .form-control {
@@ -45,25 +38,13 @@ body {
     background-color: #ED5D28;
 }
 
-#signup-box {
-    border-radius: 7%;
-}
-
-a {
-    color: coral;
-}
-
-a:hover {
-    color: #ED5D28;
-}
-
-#incorrect {
-    color: rgb(224, 0, 0);
-    font-weight: bold;
-}
-
 .back-button {
     position: absolute;
+}
+
+h4 {
+    font-weight: 700;
+    color: white;
 }
 
 

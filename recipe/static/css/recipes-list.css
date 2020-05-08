@@ -1,5 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+body {
+    background: url("../images/texture.png") repeat #cfcfcf;
+}
+
+#main-navbar {
+    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
+    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
+    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
+}
+
 .card-img-top {
-    height: 200px;
+    height: 198px;
+    border-radius: 2%;
+    border-color: #fff;
 }
 
 #card-rec {
@@ -7,11 +20,13 @@
 }
 
 .card {
-    color: white;
-    background-color: coral;
-    border-color: white;
+    color: #FFF;
+    background-color: #f37546;
+    border-color: #FFF;
     width: 250px;
-    max-height: 300px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .card-img-top {
@@ -20,20 +35,23 @@
 
 .card-body a,
 .card-img-overlay a {
-    color: white;
-    border-color: white;
-}
-
-.card-body a:hover,
-.card-img-overlay a:hover {
-    color: coral;
+    color: #FF7F50;
     border-color: white;
     background-color: white;
 }
 
+.card-body a:hover,
+.card-img-overlay a:hover {
+    color: #fff;
+    border-color: white;
+    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
+    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
+    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
+}
+
 .card-body a:active,
 .card-img-overlay a:active {
-    color: coral !important;
+    color: #FF7F50 !important;
     border-color: white !important;
     background-color: white !important;
     box-shadow: none !important;
@@ -41,38 +59,140 @@
 
 .card-body a:focus,
 .card-img-overlay a:focus {
-    color: coral !important;
+    color: #FF7F50 !important;
     border-color: white !important;
     background-color: white !important;
     box-shadow: none !important;
 }
 
 #food-header {
-    color: black;
-    font-weight: 500;
+    color: #fff;
+    font-weight: 700;
     margin-left: 25px;
     font-size: 40px;
 }
 
 #recipe-bar {
-    background-color: coral;
+    background-color: transparent;
 }
 
 #search-button,
 #create-button {
-    color: coral;
+    color: #FF7F50;
     background-color: white;
     border-color: white;
+    margin-bottom: 5px;
 }
 
 #search-button:hover,
 #create-button:hover {
     color: white;
-    background-color: coral;
+    background-color: #FF7F50;
     border-color: white;
 }
 
 #search-button:focus,
-#create-button:focus {
+#create-button:focus,
+#search-box:focus {
     box-shadow: none;
 }
+
+#search-box:focus {
+    border-color: #FF7F50;
+}
+
+.no-recipes {
+    color: white;
+    font-weight: 700;
+    font-size: 34px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/*---Media Queries --*/
+
+@media (max-width: 992px) {
+    #search-form-box,
+    #search-button,
+    #create-link {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 768px) {}
+
+@media (max-width: 576px) {}
+
+
+/*---Firefox Bug Fix --*/
+
+.carousel-item {
+    transition: -webkit-transform 0.5s ease;
+    transition: transform 0.5s ease;
+    transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+}
+
+
+/*--- Fixed Background Image --*/
+
+figure {
+    position: relative;
+    width: 100%;
+    height: 60%;
+    margin: 0!important;
+}
+
+.fixed-wrap {
+    clip: rect(0, auto, auto, 0);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#fixed {
+    background-image: url('img/mac.png');
+    position: fixed;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+
+/*--- Bootstrap Padding Fix --*/
+
+[class*="col-"] {
+    padding: 1rem;
+}
+
+
+/*
+Extra small (xs) devices (portrait phones, less than 576px)
+No media query since this is the default in Bootstrap
+
+Small (sm) devices (landscape phones, 576px and up)
+@media (min-width: 576px) { ... }
+
+Medium (md) devices (tablets, 768px and up)
+@media (min-width: 768px) { ... }
+
+Large (lg) devices (desktops, 992px and up)
+@media (min-width: 992px) { ... }
+
+Extra (xl) large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { ... }
+*/

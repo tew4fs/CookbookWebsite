@@ -1,5 +1,8 @@
 from django.shortcuts import render
+from login.models import Notification
 
 # Create your views here.
 def index(request):
-    return render(request, 'home/home.html')
+    notifications = Notification.objects.filter(to_user=request.user.username)
+    content = {'notifications': notifications}
+    return render(request, 'home/home.html', content)

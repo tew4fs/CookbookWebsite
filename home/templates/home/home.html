@@ -13,7 +13,7 @@
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="main-navbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'landing' %}"><img src="{% static 'images/CommunityCookbooks.png' %}" width="200px"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-targer="#navbar-Responsive">
@@ -29,10 +29,18 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Account
+                            {% if notifications %}
+                                <span class="badge badge-danger">{{ notifications|length }}</span>
+                            {% endif %}
                         </a> {% if user.is_authenticated %}
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Account</a>
-                            <a class="dropdown-item" href="#">Settings</a>
+                            <a class="dropdown-item" href="{% url 'notifications' %}">
+                                Notifications
+                                {% if notifications %}
+                                <span class="badge badge-danger">{{ notifications|length }}</span>
+                                {% endif %}
+                            </a>
+                            <a class="dropdown-item" href="{% url 'settings' %}">Settings</a>
                             <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
                         </div>
                         {% else %}
