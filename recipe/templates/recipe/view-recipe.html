@@ -54,17 +54,17 @@
         </div>
     </nav>
 
-    {% if is_owner %}
     <nav class="navbar navbar-light" id="edit-bar">
         <div class="mr-auto">
+            {% if is_owner %}
             <a href="{% url 'edit_recipe' enc=recipe.encrypt %}"><button class="btn btn-outline-secondary" id="edit-recipe-button">Edit Recipe</button></a>
             <a href="{% url 'edit_people' enc=recipe.encrypt %}"><button class="btn btn-outline-secondary ml-sm-3" id="edit-people-button">Manage People</button></a>
-            <button class="btn btn-outline-secondary ml-sm-3" id="delete-recipe-button" data-toggle="modal" data-target="#delete-modal">Delete Recipe</button>
+            <button class="btn btn-outline-secondary ml-sm-3" id="delete-recipe-button" data-toggle="modal" data-target="#delete-modal">Delete Recipe</button> {% else %}
+            <button class="btn btn-outline-secondary ml-sm-3" id="remove-user-button" data-toggle="modal" data-target="#remove-modal">Remove Recipe</button> {% endif %}
         </div>
     </nav>
-    {% endif %}
 
-    <!-- Modal -->
+    <!-- Modals -->
     <div class="modal" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -80,6 +80,26 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <a href="{% url 'delete_recipe' enc=recipe.encrypt %}"><button type="button" class="btn btn-danger">Delete</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="remove-modal" tabindex="-1" role="dialog" aria-labelledby="remove-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="remove-modal-label">{{recipe.food}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to remove yourself from access to this recipe?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a href="{% url 'remove_recipe' enc=recipe.encrypt %}"><button type="button" class="btn btn-danger">Remove</button></a>
                 </div>
             </div>
         </div>
@@ -108,10 +128,10 @@
                             Ingredients
                         </h3>
                         <div class="card-text">
-                            <ol>
+                            <ul>
                                 {% for i in recipe.ingredients %}
                                 <li id="ingredient"> {{ i }}</li> {% endfor %}
-                            </ol>
+                            </ul>
                         </div>
                     </div>
                 </div>

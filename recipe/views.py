@@ -229,6 +229,18 @@ def delete_recipe(request, enc):
     recipe.delete()
     return HttpResponseRedirect('../../')
 
+def remove_recipe(request, enc):
+    recipe = get_object_or_404(Recipe, encrypt=enc)
+    user_list = list()
+    for item in recipe.users:
+        if item != request.user.username:
+            user_list.append(item)
+    recipe.users.clear()
+    for item in user_list:
+        recipe.users.append(item)
+    recipe.save()
+    return HttpResponseRedirect('../../')
+
 def search(query, category, request):
     if category != "All":
         recipes = Recipe.objects.filter(food_type=category)
