@@ -73,6 +73,20 @@ footer {
     background-color: white;
 }
 
+.btn-outline-secondary:active {
+    color: #fff;
+    border-color: white !important;
+    background-color: #FF7F50 !important;
+    box-shadow: none !important;
+}
+
+.btn-outline-secondary:focus {
+    color: #fff;
+    border-color: white;
+    background-color: #FF7F50;
+    box-shadow: none;
+}
+
 .dropdown {
     cursor: pointer;
 }

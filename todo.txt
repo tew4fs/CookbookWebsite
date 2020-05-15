@@ -1,0 +1,7 @@
+1. Change logo *
+2. Create change password page *
+3. Create email sent for verification page
+4. Make better emails
+5. Footer
+6. Measurement conversion page
+7. Update incorrect email text color in settings page *

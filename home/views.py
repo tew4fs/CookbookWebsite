@@ -5,4 +5,5 @@ from login.models import Notification
 def index(request):
     notifications = Notification.objects.filter(to_user=request.user.username)
     content = {'notifications': notifications}
+    print(request.META.get('HTTP_REFERER'))
     return render(request, 'home/home.html', content)

@@ -24,6 +24,7 @@ function onLoad() {
         ingredients.append(nextStep);
         i++;
     }
+    document.getElementById("food-pic").style.display = "none";
 }
 
 
@@ -78,14 +79,22 @@ function removeIngredient() {
 
 function readURL(input) {
     if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            $('#food-pic')
-                .attr('src', e.target.result)
-                .width(200)
-                .height(200);
-        };
-        reader.readAsDataURL(input.files[0]);
+        var str = input.files[0].name;
+        var fileType = str.substr(str.length - 4);
+        if (fileType != "jpeg" && fileType != ".jpg" && fileType != ".png" && fileType != '.JPG' && fileType != '.PNG') {
+            document.getElementById("file-up").value = "";
+            document.getElementById("food-pic").style.display = "none";
+        } else {
+            document.getElementById("food-pic").style.display = "inline";
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#food-pic')
+                    .attr('src', e.target.result)
+                    .width(200)
+                    .height(200);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
     }
 }
 

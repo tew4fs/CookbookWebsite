@@ -45,6 +45,14 @@ body {
     background-color: #ED5D28;
 }
 
+#button:active {
+    box-shadow: none;
+}
+
+#button:focus {
+    box-shadow: none;
+}
+
 #signup-box {
     border-radius: 7%;
 }
@@ -58,12 +66,17 @@ a:hover {
 }
 
 #incorrect {
-    color: rgb(224, 0, 0);
+    color: #F32013;
+    background-color: rgba(243, 32, 19, .3);
     font-weight: bold;
 }
 
 .back-button {
     position: absolute;
+}
+
+.dropdown {
+    cursor: pointer;
 }
 
 

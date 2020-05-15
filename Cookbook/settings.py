@@ -141,3 +141,10 @@ STATICFILES_DIRS = (
 
 django_heroku.settings(locals())
 SITE_ID = 1
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'communitycookbooks.help@gmail.com'
+EMAIL_HOST_PASSWORD = 'Care2Sher'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587

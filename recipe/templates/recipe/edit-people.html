@@ -16,7 +16,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="main-navbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'landing' %}"><img src="{% static 'images/CommunityCookbooks.png' %}" width="200px"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-targer="#navbar-Responsive">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-Responsive">
             <span class="navbar-toggler-icon"></span>
         </button>
             <div class="collapse navbar-collapse" id="navbar-Responsive">
@@ -92,7 +92,7 @@
     <script>
         function onLoad() {
             var i = 0;
-            '{% for user in recipe.users %}'
+            '{% for user in users %}'
             var users = document.getElementById("users");
             var nextUser = document.createElement("input");
             nextUser.type = "email"

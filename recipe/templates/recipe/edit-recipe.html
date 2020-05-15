@@ -16,7 +16,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" id="main-navbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'landing' %}"><img src="{% static 'images/CommunityCookbooks.png' %}" width="200px"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-targer="#navbar-Responsive">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-Responsive">
             <span class="navbar-toggler-icon"></span>
         </button>
             <div class="collapse navbar-collapse" id="navbar-Responsive">
@@ -72,7 +72,7 @@
                                     <option id="Dessert">Dessert</option>
                                 </select>
                                 <textarea class="form-control" type="textarea" name="description" placeholder="Food Description" maxLength="300" required>{{recipe.description}}</textarea>
-                                <label for="file-up">Picture</label>
+                                <label for="file-up">Picture (.jpg or .png)</label>
                                 <input class="form-control-file" type="file" accept="image/*" id="file-up" onchange="readURL(this);" name="pic" />
                                 <img id="food-pic" src="{{recipe.picture}}" />
                             </div>
@@ -168,6 +168,9 @@
             ingredients.append(nextIngredient);
             i++
             '{% endfor %}'
+            if ('{{recipe.picture}}' == "") {
+                document.getElementById("food-pic").style.display = "none";
+            }
         }
         $(document).ready(function() {
             onLoad();

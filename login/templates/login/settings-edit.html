@@ -8,7 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <link type="text/css" rel="stylesheet" href="{% static 'css/notifications.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/settings.css' %}" />
 </head>
 
 <body>
@@ -54,78 +54,64 @@
         </div>
     </nav>
 
-    {% if notification_list %}
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-9 mx-auto">
-                <h4>Invitations to a Recipe</h4>
-                <div class="list-group" id="list">
+    <form action="{% url 'settings' %}" method="POST" autocomplete="off">
+        {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-8 mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <h5 class="card-title text-center">Settings</h5>
+                                <div class="form-group">
+                                    <label for="email">Email address</label>
+                                    <input class="form-control" type="email" name="email" id="email" placeholder="Email" value="{{user.username}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password_button">Password</label>
+                                    <div><button class="btn btn-primary" type="button" id="password_button" data-toggle="modal" data-target="#change-modal">Set New Password</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="first_name">First Name</label>
+                                    <input class="form-control" type="text" name="first_name" id="first_name" placeholder="First Name" value="{{user.first_name}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Last Name</label>
+                                    <input class="form-control" type="text" name="last_name" id="last_name" placeholder="Last Name" value="{{user.last_name}}" required>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" type="submit" id="save">Save</button>
+                        </div>
+                    </div>
                 </div>
+            </div>
+    </form>
+
+    <!-- Change Password Modal -->
+    <div class="modal" id="change-modal" tabindex="-1" role="dialog" aria-labelledby="change-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="change-modal-label">Enter Current Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <form action="{% url 'settings' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <input class="form-control" type="password" name="current_password" id="current_password" placeholder="Current Password" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    {% else %}
-    <div id="message">
-        <div id="message-info">There are no new notifications.</div>
-    </div>
-    {% endif %}
 
-    <script>
-        function onLoad() {
-            var i = 0;
-            var list = document.getElementById("list");
-            '{% for rec in notification_list %}'
-            var notification = document.createElement("div");
-            notification.className = "list-group-item list-group-item flex-column align-items-start";
-            notification.id = i;
-            list.appendChild(notification);
-            var title = document.createElement("h5");
-            title.className = "mb-1";
-            title.innerHTML = "Recipe: {{rec.food}}";
-            notification.appendChild(title);
-            var content = document.createElement("div");
-            content.className = "d-flex w-100 justify-content-between";
-            notification.appendChild(content);
-            var description = document.createElement("p");
-            description.className = "mb-1";
-            description.innerHTML = "{{ rec.description }}";
-            content.appendChild(description);
-            var icons = document.createElement("div");
-            content.appendChild(icons);
-            var accept = document.createElement("a");
-            accept.href = "{% url 'accept_invitation' enc=rec.encrypt %}";
-            icons.appendChild(accept);
-            var accept_button = document.createElement("button");
-            accept_button.className = "border-0 btn-transition btn btn-outline-success";
-            accept.appendChild(accept_button);
-            var accept_icon = document.createElement("i");
-            accept_icon.className = "fa fa-check";
-            accept_button.appendChild(accept_icon);
-
-            var decline = document.createElement("a");
-            decline.href = "{% url 'decline_invitation' enc=rec.encrypt %}";
-            icons.appendChild(decline);
-            var decline_button = document.createElement("button");
-            decline_button.className = "border-0 btn-transition btn btn-outline-danger";
-            decline.appendChild(decline_button);
-            var decline_icon = document.createElement("i");
-            decline_icon.className = "fa fa-times";
-            decline_button.appendChild(decline_icon);
-            i++;
-            '{% endfor %}'
-            i = 0;
-            '{% for user in from_users %}'
-            var notification = document.getElementById(i);
-            var owner = document.createElement("small");
-            owner.innerHTML = "Owner: {{user}}";
-            notification.appendChild(owner);
-            i++;
-            '{% endfor %}'
-        }
-        $(document).ready(function() {
-            onLoad();
-        });
-    </script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 

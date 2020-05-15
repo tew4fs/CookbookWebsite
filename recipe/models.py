@@ -25,7 +25,7 @@ class Recipe(models.Model):
         size=100,
     )
     users = ArrayField(
-        models.CharField(max_length=80),
+        models.IntegerField(default=-1),
         default=list,
         size=1000,
     )

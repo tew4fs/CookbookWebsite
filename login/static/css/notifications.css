@@ -47,6 +47,34 @@ h4 {
     color: white;
 }
 
+.dropdown {
+    cursor: pointer;
+}
+
+#message {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+#message-success {
+    color: #39C16C;
+    font-weight: 700;
+    font-size: 34px;
+}
+
+#message-info {
+    color: #fff;
+    font-weight: 700;
+    font-size: 34px;
+}
+
+.spinner-border {
+    color: #39C16C;
+}
+
 
 /*---Media Queries --*/
 
