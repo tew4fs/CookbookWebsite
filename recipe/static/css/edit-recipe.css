@@ -33,12 +33,21 @@ button {
     border-color: coral;
 }
 
-#button:hover {
+#button-small {
+    margin-top: 10px;
+    background-color: coral;
+    color: white;
+    border-color: coral;
+}
+
+#button:hover,
+#button-small:hover {
     background-color: white;
     color: coral;
 }
 
-#button:focus {
+#button:focus,
+#button-small:focus {
     box-shadow: none !important;
 }
 

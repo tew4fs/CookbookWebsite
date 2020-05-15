@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
+from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, redirect
 from django.core.files.storage import FileSystemStorage
 from django.contrib.postgres.fields import ArrayField
 from django.contrib import messages
@@ -181,6 +181,7 @@ def edit(request, enc):
         s = request.POST.get(str(i))
         if s is not None:
             recipe.ingredients.append(s)
+    print(request.POST.get('pic'))
     if request.POST.get('pic') != "":
         pic = request.FILES['pic']
         pic_str = str(pic)
@@ -190,10 +191,16 @@ def edit(request, enc):
             pic_file = fs.save(pic.name, pic)
             url = fs.url(pic_file)
             recipe.picture = url
-    else:
-        recipe.picture = ""
     recipe.save()
     return HttpResponseRedirect('../../../view-recipe/' + str(recipe.encrypt) +'/')
+
+def remove_picture(request, enc):
+    recipe = get_object_or_404(Recipe, encrypt=enc)
+    if request.user.pk != recipe.users[0]:
+        return redirect('home')
+    recipe.picture = ""
+    recipe.save()
+    return redirect('edit_recipe', enc=enc)
 
 def edit_people(request, enc):
     if request.user.is_authenticated == False:

@@ -18,4 +18,5 @@ urlpatterns = [
     path('edit-people/<uuid:enc>/people/', views.people, name='people'),
     path('delete-recipe/<uuid:enc>/', views.delete_recipe, name='delete_recipe'),
     path('remove-recipe/<uuid:enc>/', views.remove_recipe, name='remove_recipe'),
+    path('remove-picture/<uuid:enc>/', views.remove_picture, name="remove_picture"),
 ]
