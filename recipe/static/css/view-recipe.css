@@ -53,9 +53,16 @@ body {
     cursor: pointer;
 }
 
-#delete-recipe-button,
-#edit-people-button,
-#edit-recipe-button {}
+#ingredient-list {
+    list-style-type: None;
+}
+
+#checkbox {
+    position: relative;
+    left: -20px;
+    width: 15px;
+    height: 15px;
+}
 
 
 /*---Media Queries --*/

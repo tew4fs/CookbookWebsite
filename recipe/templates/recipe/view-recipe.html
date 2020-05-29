@@ -138,9 +138,9 @@
                             Ingredients
                         </h3>
                         <div class="card-text">
-                            <ul>
+                            <ul id="ingredient-list">
                                 {% for i in recipe.ingredients %}
-                                <li id="ingredient"> {{ i }}</li> {% endfor %}
+                                <li id="ingredient"><input id="checkbox" type="checkbox">{{ i }}</li> {% endfor %}
                             </ul>
                         </div>
                     </div>
