@@ -21,7 +21,7 @@ def home(request):
         recipes = search(query, "All", request)
         content = {'recipes': recipes}
     else:
-        appetizers = Recipe.objects.filter(food_type="Appetizer")
+        '''appetizers = Recipe.objects.filter(food_type="Appetizer")
         breakfast = Recipe.objects.filter(food_type="Breakfast")
         dinner = Recipe.objects.filter(food_type="Dinner")
         desserts = Recipe.objects.filter(food_type="Dessert")
@@ -41,7 +41,12 @@ def home(request):
             if request.user.pk not in rec.users:
                 desserts = desserts.exclude(pk=rec.pk)
         desserts = desserts[0:4]
-        content = {'appetizers': appetizers, 'breakfast': breakfast, 'dinner': dinner, 'desserts': desserts, 'notifications': notifications,}
+        content = {'appetizers': appetizers, 'breakfast': breakfast, 'dinner': dinner, 'desserts': desserts, 'notifications': notifications,}'''
+        recipes = Recipe.objects.all().order_by('food')
+        for rec in recipes:
+            if request.user.pk not in rec.users:
+                recipes = recipes.exclude(pk=rec.pk)
+        content = {'notifications': notifications, 'recipes': recipes}
     return render(request, 'recipe/home.html', content)
 
 def appetizers(request):
@@ -113,7 +118,7 @@ def create_recipe(request):
         return HttpResponseRedirect('../../get-started/login/')
     if len(Unverified.objects.filter(user=request.user.pk)) > 0:
         return HttpResponseRedirect('../')
-    notifications = Notification.objects.filter(to_user=request.user.username)
+    notifications = Notification.objects.filter(to_user=request.user.pk)
     content = {'notifications': notifications}
     return render(request, 'recipe/create-recipe.html', content)
 
@@ -130,6 +135,7 @@ def create(request):
         s = request.POST.get(str(i))
         if s is not None:
             rec.ingredients.append(s)
+    '''
     if request.POST.get('pic') != "":
         pic = request.FILES['pic']
         pic_str = str(pic)
@@ -139,6 +145,11 @@ def create(request):
             pic_file = fs.save(pic.name, pic)
             url = fs.url(pic_file)
             rec.picture = url
+    '''
+    if request.POST.get('cook_time') is not None:
+        rec.cook_time = request.POST.get('cook_time')
+    if request.POST.get('serves') is not None:
+        rec.serves = request.POST.get('serves')
     rec.users.append(request.user.pk)
     rec.save()
     return HttpResponseRedirect('../')
@@ -181,7 +192,7 @@ def edit(request, enc):
         s = request.POST.get(str(i))
         if s is not None:
             recipe.ingredients.append(s)
-    print(request.POST.get('pic'))
+    '''
     if request.POST.get('pic') != "":
         pic = request.FILES['pic']
         pic_str = str(pic)
@@ -191,6 +202,11 @@ def edit(request, enc):
             pic_file = fs.save(pic.name, pic)
             url = fs.url(pic_file)
             recipe.picture = url
+    '''
+    if request.POST.get('cook_time') is not None:
+        recipe.cook_time = request.POST.get('cook_time')
+    if request.POST.get('serves') is not None:
+        recipe.serves = request.POST.get('serves')
     recipe.save()
     return HttpResponseRedirect('../../../view-recipe/' + str(recipe.encrypt) +'/')
 

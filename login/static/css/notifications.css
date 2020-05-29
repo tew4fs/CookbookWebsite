@@ -1,12 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 body {
-    background: url("../images/texture.png") repeat #cfcfcf;
+    background-color: #D3D3D3;
 }
 
 #main-navbar {
-    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
+    background-color: #FF7F50 !important;
+    box-shadow: 0 0 10px;
 }
 
 .form-control {
@@ -15,6 +14,11 @@ body {
     border-right: 0px;
     border-color: rgba(0, 0, 0, 0.4);
     border-radius: 0%;
+}
+
+.list-group-item {
+    border-color: #696969;
+    box-shadow: 0 0 10px;
 }
 
 .form-control:focus {
@@ -44,7 +48,7 @@ body {
 
 h4 {
     font-weight: 700;
-    color: white;
+    color: #696969;
 }
 
 .dropdown {
@@ -59,10 +63,28 @@ h4 {
     text-align: center;
 }
 
+#no-notifications {
+    border-color: #696969;
+    box-shadow: 0 0 10px;
+    color: #696969;
+    font-weight: 700;
+    font-size: 34px;
+    width: 350px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+}
+
 #message-success {
     color: #39C16C;
     font-weight: 700;
     font-size: 34px;
+}
+
+#message-card {
+    border-color: #696969;
+    box-shadow: 0 0 10px;
 }
 
 #message-info {

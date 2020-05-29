@@ -1,8 +1,25 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+body {
+    /* The image used */
+    background-image: url("../images/cupcakes.jpg");
+    /* Center and scale the image nicely */
+    background-position: center center;
+    /* Background image doesn't tile */
+    background-repeat: no-repeat;
+    /* Background image is fixed in the viewport so that it doesn't move when 
+       the content's height is greater than the image's height */
+    background-attachment: fixed;
+    /* This is what makes the background image rescale based
+       on the container's size */
+    background-size: cover;
+    /* Set a background color that will be displayed
+       while the background image is loading */
+    background-color: #D3D3D3;
+}
+
 #main-navbar {
-    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
+    background-color: #FF7F50 !important;
+    box-shadow: 0 0 10px;
 }
 
 .form-label-group {
@@ -26,30 +43,16 @@
     margin-bottom: 10px;
 }
 
-body {
-    /* The image used */
-    background-image: url("../images/cupcakes.jpg");
-    /* Center and scale the image nicely */
-    background-position: center center;
-    /* Background image doesn't tile */
-    background-repeat: no-repeat;
-    /* Background image is fixed in the viewport so that it doesn't move when 
-       the content's height is greater than the image's height */
-    background-attachment: fixed;
-    /* This is what makes the background image rescale based
-       on the container's size */
-    background-size: cover;
-    /* Set a background color that will be displayed
-       while the background image is loading */
-    background-color: #fff;
-}
-
 #login-box {
     border-radius: 7%;
+    border-color: #696969;
+    box-shadow: 0 0 10px;
 }
 
 #message-box {
     border-radius: 1%;
+    border-color: #696969;
+    box-shadow: 0 0 10px;
 }
 
 #button {

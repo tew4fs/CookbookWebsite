@@ -26,13 +26,14 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'breakfast' %}">Breakfast</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'dinner' %}">Dinner</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'desserts' %}">Desserts</a></li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Account
+                        {{ user.first_name }}
                         {% if notifications %}
                             <span class="badge badge-danger">{{ notifications|length }}</span>
                         {% endif %}
-                    </a> {% if user.is_authenticated %}
+                    </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="{% url 'notifications' %}">
                             Notifications
@@ -43,11 +44,11 @@
                             <a class="dropdown-item" href="{% url 'settings' %}">Settings</a>
                             <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
                         </div>
-                        {% else %}
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{% url 'login' %}">Login</a>
-                        </div>
-                        {% endif %}
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">
+                        Login
+                    </a> {% endif %}
                     </li>
                 </ul>
             </div>
@@ -58,8 +59,8 @@
         <div class="mr-auto">
             {% if is_owner %}
             <a href="{% url 'edit_recipe' enc=recipe.encrypt %}"><button class="btn btn-outline-secondary" id="edit-recipe-button">Edit Recipe</button></a>
-            <a href="{% url 'edit_people' enc=recipe.encrypt %}"><button class="btn btn-outline-secondary ml-sm-3" id="edit-people-button">Manage People</button></a>
-            <button class="btn btn-outline-secondary ml-sm-3" id="delete-recipe-button" data-toggle="modal" data-target="#delete-modal">Delete Recipe</button> {% else %}
+            <a href="{% url 'edit_people' enc=recipe.encrypt %}"><button class="btn btn-outline-secondary" id="edit-people-button">Manage People</button></a>
+            <button class="btn btn-outline-secondary" id="delete-recipe-button" data-toggle="modal" data-target="#delete-modal">Delete Recipe</button> {% else %}
             <button class="btn btn-outline-secondary ml-sm-3" id="remove-user-button" data-toggle="modal" data-target="#remove-modal">Remove Recipe</button> {% endif %}
         </div>
     </nav>
@@ -118,6 +119,15 @@
                         <div class="card-text text-center">
                             {{ recipe.description }}
                         </div>
+                        {% if recipe.cook_time != 0 %}
+                        <div class="card-text text-center">Cook Time: {{recipe.cook_time}} mins</div>
+                        {% else %}
+                        <div class="card-text text-center">Cook Time: -</div>
+                        {% endif %} {% if recipe.serves != 0 %}
+                        <div class="card-text text-center">Serves: {{recipe.serves}}</div>
+                        {% else %}
+                        <div class="card-text text-center">Serves: -</div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

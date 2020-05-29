@@ -17,8 +17,8 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'landing' %}"><img src="{% static 'images/CommunityCookbooks.png' %}" width="200px"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-Responsive">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <span class="navbar-toggler-icon"></span>
+        </button>
             <div class="collapse navbar-collapse" id="navbar-Responsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
@@ -26,28 +26,29 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'breakfast' %}">Breakfast</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'dinner' %}">Dinner</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'desserts' %}">Desserts</a></li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Account
-                            {% if notifications %}
-                                <span class="badge badge-danger">{{ notifications|length }}</span>
-                            {% endif %}
-                        </a> {% if user.is_authenticated %}
+                        {{ user.first_name }}
+                        {% if notifications %}
+                            <span class="badge badge-danger">{{ notifications|length }}</span>
+                        {% endif %}
+                    </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="{% url 'notifications' %}">
-                                Notifications
-                                {% if notifications %}
-                                <span class="badge badge-danger">{{ notifications|length }}</span>
-                                {% endif %}
-                            </a>
+                            Notifications
+                            {% if notifications %}
+                            <span class="badge badge-danger">{{ notifications|length }}</span>
+                            {% endif %}
+                        </a>
                             <a class="dropdown-item" href="{% url 'settings' %}">Settings</a>
                             <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
                         </div>
-                        {% else %}
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{% url 'login' %}">Login</a>
-                        </div>
-                        {% endif %}
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">
+                        Login
+                    </a> {% endif %}
                     </li>
                 </ul>
             </div>
@@ -69,28 +70,40 @@
             {% for item in appetizers %}
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" id="card-rec">
                 <div class="card">
-                    {% if item.picture %}
+                    <!--{% if item.picture %}
                     <img class="card-img-top" src="{{ item.picture.url }}" alt="{{ item.food }}">
                     <div class="card-img-overlay">
                         <h4 class="card-title">{{ item.food }}</h4>
-                        {% if item.description|length > 50 %}
+                        {% if item.|length > 50 %}
                         <p class="card-text">{{ item.description|slice:"0:50" }} </p>
                         {% else %}
                         <p class="card-text">{{ item.description }} </p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary" id="view-recipe-button">View Recipe</a>
                     </div>
-                    {% else %}
+                    {% else %}-->
                     <div class="card-body">
-                        <h4 class="card-title">{{ item.food }}</h4>
-                        {% if item.description|length > 50 %}
-                        <p class="card-text">{{ item.description|slice:"0:50" }}... </p>
+                        {% if item.food_type == "Appetizer" %}
+                        <i class="fas fa-utensils" title="Appetizer Recipe" id="food-icon"></i> {% elif item.food_type == "Breakfast" %}
+                        <i class="fas fa-bacon" title="Breakfast Recipe" id="food-icon"></i> {% elif item.food_type == "Dinner" %}
+                        <i class="fas fa-hamburger" title="Dinner Recipe" id="food-icon"></i> {% elif item.food_type == "Dessert" %}
+                        <i class="fas fa-ice-cream" title="Dessert Recipe" id="food-icon"></i>{% else %} {% endif %}
+                        <h4 class="card-title">{{ item.food }} {% if item.users|length > 1 %} <span class="badge badge-info" title="Shared with {{item.users|length}} people">{{item.users|length}}</span> {% else %}
+                            <span class="badge badge-info" title="Shared with {{item.users|length}} person">{{item.users|length}}</span> {% endif %}
+                        </h4>
+
+                        {% if item.cook_time != 0 %}
+                        <p class="card-text">Cook Time: {{item.cook_time}} min</p>
                         {% else %}
-                        <p class="card-text">{{ item.description }} </p>
+                        <p class="card-text"> Cook Time: - </p>
+                        {% endif %} {% if item.serves != 0 %}
+                        <p class="card-text">Serves: {{item.serves}} </p>
+                        {% else %}
+                        <p class="card-text">Serves: -</p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary" id="view-recipe-button">View Recipe</a>
                     </div>
-                    {% endif %}
+                    <!--{% endif %}-->
                 </div>
             </div>
             {% endfor %}
@@ -102,35 +115,52 @@
             {% for item in recipes %}
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" id="card-rec">
                 <div class="card">
-                    {% if item.picture %}
+                    <!--{% if item.picture %}
                     <img class="card-img-top" src="{{ item.picture.url }}" alt="{{ item.food }}">
                     <div class="card-img-overlay">
                         <h4 class="card-title">{{ item.food }}</h4>
-                        {% if item.description|length > 50 %}
-                        <p class="card-text">{{ item.description|slice:"0:50" }}... </p>
+                        {% if item.|length > 50 %}
+                        <p class="card-text">{{ item.description|slice:"0:50" }} </p>
                         {% else %}
                         <p class="card-text">{{ item.description }} </p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary" id="view-recipe-button">View Recipe</a>
                     </div>
-                    {% else %}
+                    {% else %}-->
                     <div class="card-body">
-                        <h4 class="card-title">{{ item.food }}</h4>
-                        {% if item.description|length > 50 %}
-                        <p class="card-text">{{ item.description|slice:"0:50" }}... </p>
+                        {% if item.food_type == "Appetizer" %}
+                        <i class="fas fa-utensils" title="Appetizer Recipe" id="food-icon"></i> {% elif item.food_type == "Breakfast" %}
+                        <i class="fas fa-bacon" title="Breakfast Recipe" id="food-icon"></i> {% elif item.food_type == "Dinner" %}
+                        <i class="fas fa-hamburger" title="Dinner Recipe" id="food-icon"></i> {% elif item.food_type == "Dessert" %}
+                        <i class="fas fa-ice-cream" title="Dessert Recipe" id="food-icon"></i>{% else %} {% endif %}
+                        <h4 class="card-title">{{ item.food }} {% if item.users|length > 1 %} <span class="badge badge-info" title="Shared with {{item.users|length}} people">{{item.users|length}}</span> {% else %}
+                            <span class="badge badge-info" title="Shared with {{item.users|length}} person">{{item.users|length}}</span> {% endif %}
+                        </h4>
+
+                        {% if item.cook_time != 0 %}
+                        <p class="card-text">Cook Time: {{item.cook_time}} min</p>
                         {% else %}
-                        <p class="card-text">{{ item.description }} </p>
+                        <p class="card-text"> Cook Time: - </p>
+                        {% endif %} {% if item.serves != 0 %}
+                        <p class="card-text">Serves: {{item.serves}} </p>
+                        {% else %}
+                        <p class="card-text">Serves: -</p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary">View Recipe</a>
+                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary" id="view-recipe-button">View Recipe</a>
                     </div>
-                    {% endif %}
+                    <!--{% endif %}-->
                 </div>
             </div>
             {% endfor %}
         </div>
     </div>
     {% else %}
-    <div class="no-recipes">Uh Oh, looks like you have no recipes.</div>{% endif %}
+    <div class="card" id="no-recipes">
+        <div class="card-body">
+            <div class="card-text text-center">You currently have no appetizer recipes.</div>
+            <a href="{% url 'create_recipe' %}" class="btn btn-outline-secondary" id="no-recipes-button">Create Recipe</a>
+        </div>
+    </div> {% endif %}
 
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>

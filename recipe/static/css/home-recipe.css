@@ -1,12 +1,25 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 body {
-    background: url("../images/texture.png") repeat #cfcfcf;
+    /*background: url("../images/texture.png") repeat #cfcfcf;*/
+    background-color: #D3D3D3;
 }
 
 #main-navbar {
-    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
+    background-color: #FF7F50 !important;
+    box-shadow: 0 0 10px;
+}
+
+#food-icon {
+    position: absolute;
+    left: 89%;
+    top: 5%;
+    color: #FF7F50;
+    cursor: default;
+}
+
+.badge-info {
+    font-size: 14px;
+    cursor: default;
 }
 
 .card-img-top {
@@ -15,18 +28,24 @@ body {
     border-color: #fff;
 }
 
+.card-title {
+    font-size: 20px;
+    text-transform: capitalize;
+}
+
 #card-rec {
     margin-top: 20px;
 }
 
 .card {
-    color: #FFF;
-    background-color: #f37546;
-    border-color: #FFF;
+    color: #696969;
+    background-color: #fff;
+    border-color: #696969;
     width: 250px;
     height: 200px;
     margin-left: auto;
     margin-right: auto;
+    box-shadow: 0 0 10px;
 }
 
 .card-img-top {
@@ -35,42 +54,34 @@ body {
 
 .card-body a,
 .card-img-overlay a {
-    color: #FF7F50;
-    border-color: white;
-    background-color: white;
+    color: #fff;
+    border-color: #696969;
+    background-color: #FF7F50;
 }
 
 .card-body a:hover,
 .card-img-overlay a:hover {
     color: #fff;
-    border-color: white;
-    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
+    border-color: #696969;
+    background-color: #ED5D28;
 }
 
 .card-body a:active,
 .card-img-overlay a:active {
     color: white !important;
-    border-color: white !important;
-    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
-    box-shadow: none !important;
+    border-color: #696969 !important;
+    background-color: #ED5D28 !important;
 }
 
 .card-body a:focus,
 .card-img-overlay a:focus {
     color: white !important;
-    border-color: white !important;
-    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
-    box-shadow: none !important;
+    border-color: #696969 !important;
+    background-color: #ED5D28 !important;
 }
 
 #food-header {
-    color: #fff;
+    color: #696969;
     font-weight: 700;
     margin-left: 25px;
     font-size: 40px;
@@ -82,41 +93,49 @@ body {
 
 #search-button,
 #create-button {
-    color: #FF7F50;
-    background-color: white;
-    border-color: white;
+    color: #fff;
+    border-color: #696969;
+    background-color: #FF7F50;
     margin-bottom: 5px;
 }
 
 #search-button:hover,
 #create-button:hover {
-    color: white;
-    background-color: #FF7F50;
-    border-color: white;
-}
-
-#search-button:focus,
-#create-button:focus,
-#search-box:focus {
-    box-shadow: none;
+    color: #fff;
+    border-color: #696969;
+    background-color: #ED5D28;
 }
 
 #search-box:focus {
-    border-color: #FF7F50;
+    color: #FF7F50 !important;
+    border-color: #696969;
 }
 
-.no-recipes {
-    color: white;
+#no-recipes {
+    color: #696969;
     font-weight: 700;
     font-size: 34px;
+    width: 350px;
+    height: 250px;
+    margin: auto;
+}
+
+#no-recipes-button {
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    margin-top: 10px;
+    transform: translate(-50%, 0%);
 }
 
 .dropdown {
     cursor: pointer;
+}
+
+#view-recipe-button {
+    position: absolute;
+    top: 75%;
+    left: 55%;
+    font-size: 14px;
 }
 
 

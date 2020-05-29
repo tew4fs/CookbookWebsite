@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 body {
-    background: url("../images/texture.png") repeat #cfcfcf;
+    background-color: #D3D3D3;
 }
 
 #main-navbar {
-    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
+    background-color: #FF7F50 !important;
+    box-shadow: 0 0 10px;
 }
 
 .card {
     border-radius: 4%;
     border-color: white;
+    box-shadow: 0 0 10px;
 }
 
 textarea,
@@ -27,19 +27,16 @@ button {
 }
 
 #button {
-    background-color: coral;
-    color: white;
+    color: #fff;
+    border-color: #696969;
+    background-color: #FF7F50;
     height: 70px;
-    border-color: coral;
 }
 
 #button:hover {
-    background-color: white;
-    color: coral;
-}
-
-#button:focus {
-    box-shadow: none !important;
+    color: #fff;
+    border-color: #696969;
+    background-color: #ED5D28;
 }
 
 textarea:focus,
@@ -50,19 +47,15 @@ select:focus {
 }
 
 #save {
-    margin-right: 50px;
-    color: #FF7F50;
-    background-color: white;
-    border-color: white;
+    margin-right: 75px;
+    color: #fff;
+    border-color: #696969;
+    background-color: #FF7F50;
 }
 
 #save:hover {
-    background-color: #FF7F50;
-    color: white;
-}
-
-#save:focus {
-    box-shadow: none !important;
+    background-color: #FFF;
+    color: #FF7F50;
 }
 
 label {

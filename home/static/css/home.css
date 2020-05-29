@@ -19,9 +19,8 @@
 }
 
 #main-navbar {
-    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
+    background-color: #FF7F50 !important;
+    border-color: 0 0 10px;
 }
 
 footer {

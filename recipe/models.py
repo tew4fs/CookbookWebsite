@@ -14,6 +14,8 @@ class Recipe(models.Model):
     description = models.CharField(max_length=300)
     picture = models.ImageField(upload_to=get_image_path, null=True, blank=True)
     encrypt = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
+    cook_time = models.IntegerField(default=0)
+    serves = models.IntegerField(default=0)
     ingredients = ArrayField(
         models.CharField(max_length=80),
         default=list,

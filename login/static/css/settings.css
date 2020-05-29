@@ -1,12 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 body {
-    background: url("../images/texture.png") repeat #cfcfcf;
+    background-color: #D3D3D3;
 }
 
 #main-navbar {
-    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
+    background-color: #FF7F50 !important;
+    box-shadow: 0 0 10px;
 }
 
 .form-control {
@@ -42,9 +41,9 @@ body {
     position: absolute;
 }
 
-h4 {
-    font-weight: 700;
-    color: white;
+.card {
+    border-color: #696969;
+    box-shadow: 0 0 10px;
 }
 
 .dropdown {
@@ -53,23 +52,19 @@ h4 {
 
 .btn-primary {
     color: #fff;
-    border-color: #FF7F50 !important;
+    border-color: #696969 !important;
     background-color: #FF7F50 !important;
-    box-shadow: none !important;
 }
 
 .btn-primary:hover {
     color: #FF7F50;
-    border-color: #FF7F50 !important;
     background-color: #FFF !important;
-    box-shadow: none !important;
 }
 
-.btn-primary:active {
-    color: #fff;
-    border-color: #FF7F50 !important;
-    background-color: #FF7F50 !important;
-    box-shadow: none !important;
+.btn-primary:focus {
+    color: #FF7F50 !important;
+    border-color: #696969 !important;
+    background-color: #FFF !important;
 }
 
 #incorrect {

@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 #main-navbar {
-    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
+    background-color: #FF7F50 !important;
+    box-shadow: 0 0 10px;
 }
 
 body {
@@ -55,6 +54,8 @@ body {
 
 #signup-box {
     border-radius: 7%;
+    border-color: #696969;
+    box-shadow: 0 0 10px;
 }
 
 a {

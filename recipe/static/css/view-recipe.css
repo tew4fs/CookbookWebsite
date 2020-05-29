@@ -1,38 +1,35 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 body {
-    background: url("../images/texture.png") repeat #cfcfcf;
+    background-color: #D3D3D3;
 }
 
 #main-navbar {
-    background: -moz-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: -webkit-linear-gradient(left, #FF7F50 0%, #FFE643 100%);
-    background: linear-gradient(to right, #FF7F50 0%, #FFE643 100%);
+    background-color: #FF7F50 !important;
+    box-shadow: 0 0 10px;
 }
 
 .btn-outline-secondary {
-    color: #FF7F50;
-    border-color: white;
-    background-color: white;
+    color: #fff;
+    border-color: #696969;
+    background-color: #FF7F50;
 }
 
 .btn-outline-secondary:hover {
     color: #fff;
-    border-color: white;
-    background-color: #FF7F50;
+    border-color: #696969;
+    background-color: #ED5D28;
 }
 
 .btn-outline-secondary:active {
-    color: #fff;
-    border-color: white !important;
-    background-color: #FF7F50 !important;
-    box-shadow: none !important;
+    color: white !important;
+    border-color: #696969 !important;
+    background-color: #ED5D28 !important;
 }
 
 .btn-outline-secondary:focus {
-    color: #fff;
-    border-color: white;
-    background-color: #FF7F50;
-    box-shadow: none;
+    color: white !important;
+    border-color: #696969 !important;
+    background-color: #ED5D28 !important;
 }
 
 #food-img {
@@ -43,16 +40,22 @@ body {
 
 .card {
     font-size: 22px;
+    box-shadow: 0 0 10px;
 }
 
+.card-text,
 #ingredient,
 #step {
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .dropdown {
     cursor: pointer;
 }
+
+#delete-recipe-button,
+#edit-people-button,
+#edit-recipe-button {}
 
 
 /*---Media Queries --*/
@@ -61,7 +64,13 @@ body {
 
 @media (max-width: 768px) {}
 
-@media (max-width: 576px) {}
+@media (max-width: 576px) {
+    #delete-recipe-button,
+    #edit-people-button,
+    #edit-recipe-button {
+        margin-top: 7px;
+    }
+}
 
 
 /*---Firefox Bug Fix --*/
