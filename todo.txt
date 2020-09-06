@@ -1,8 +1,0 @@
-- Make better emails
-- Footer
-- Measurement conversion page
-- Add featured recipes
-- Finish landing page
-- Contact page
-- Download recipe
-- Write tests
