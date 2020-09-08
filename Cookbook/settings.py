@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import django_heroku
+import sys
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Cookbook.settings")
 
@@ -90,6 +91,15 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+if 'test' in sys.argv:
+	DATABASES['default'] = {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'mydb',
+            'USER': 'postgres',
+            'PASSWORD': '',
+            'HOST': 'localhost',
+            'PORT': '',
+            }
 
 
 # Password validation
