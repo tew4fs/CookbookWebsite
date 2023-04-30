@@ -5,8 +5,10 @@ import os
 
 # Create your models here.
 
+
 def get_image_path(instance, filename):
-    return os.path.join('photos', filename)
+    return os.path.join("photos", filename)
+
 
 class Recipe(models.Model):
     food = models.CharField(max_length=80, default="")

@@ -4,17 +4,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('login', '0001_initial'),
+        ("login", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Verified',
+            name="Verified",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('user', models.CharField(default='', max_length=80)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("user", models.CharField(default="", max_length=80)),
             ],
         ),
     ]
