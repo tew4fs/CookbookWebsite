@@ -3,3 +3,11 @@
 #e9765b
 #f2a392
 #bbd4db
+
+
+-- New Colors --
+#f5e4d2
+#ffde74
+#f18a2e
+#cfe4c3
+#afe0b8
