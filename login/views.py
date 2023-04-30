@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes, force_text
+from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from Cookbook.settings import EMAIL_HOST_USER
@@ -19,7 +19,7 @@ def index(request):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return HttpResponseRedirect('../../recipes/home/')
+        return redirect('recipe:home')
     notifications = Notification.objects.filter(to_user=request.user.pk)
     if request.method == 'POST':
         if login_authenticate(request):
@@ -60,7 +60,7 @@ def forgot_password(request):
 
 def reset(request, uidb64, token):
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
@@ -106,12 +106,12 @@ def sign_up_create(request):
         password = request.POST.get('password_1')
         first_name_form = request.POST.get('first_name')
         last_name_form = request.POST.get('last_name')
-        user = User.objects.create_user(email, email, password)
+        user = User.objects.create_user(username=email, email=email, password=password)
         user.first_name = first_name_form
         user.last_name = last_name_form
         user.save()
-        unverified = Unverified(user=email)
-        unverified.save()
+        #unverified = Unverified(user=email)
+        #unverified.save()
         user = authenticate(username=email, password=password)
         login(request, user)
         return True
@@ -120,7 +120,7 @@ def sign_up_create(request):
 
 def activate(request, uidb64, token):
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None

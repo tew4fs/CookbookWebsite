@@ -1,12 +1,15 @@
 
 from django.urls import path
 from . import views
+from recipe.views import Appetizers, Breakfast
+
+app_name = "recipe"
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('home/', views.home, name='home'),
-    path('appetizers/', views.appetizers, name='appetizers'),
-    path('breakfast/', views.breakfast, name='breakfast'),
+    path('appetizers/', Appetizers.as_view(), name='appetizers'),
+    path('breakfast/', Breakfast.as_view(), name='breakfast'),
     path('dinner/', views.dinner, name='dinner'),
     path('desserts/', views.desserts, name='desserts'),
     path('create-recipe/', views.create_recipe, name='create_recipe'),

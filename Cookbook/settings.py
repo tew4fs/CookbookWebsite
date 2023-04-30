@@ -62,7 +62,7 @@ ROOT_URLCONF = 'Cookbook.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,6 +75,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'Cookbook.wsgi.application'
 
 
@@ -84,22 +85,13 @@ WSGI_APPLICATION = 'Cookbook.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'kluybiab',
-        'USER': 'kluybiab',
-        'PASSWORD': 'd0Qbt0BTOEayK5Pdj2MUMDQMxGaYtbYl',
-        'HOST': 'drona.db.elephantsql.com',
+        'NAME': 'cookbook',
+        'USER': 'postgres',
+        'PASSWORD': 'Bethepie70',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
-if 'test' in sys.argv:
-	DATABASES['default'] = {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'mydb',
-            'USER': 'postgres',
-            'PASSWORD': '',
-            'HOST': 'localhost',
-            'PORT': '',
-            }
 
 
 # Password validation
@@ -144,6 +136,7 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/'
 
+LOGIN_URL = '/get-started/login/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
