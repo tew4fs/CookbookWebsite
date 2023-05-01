@@ -9,24 +9,24 @@
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" id="card-rec">
                 <div class="card">
                     <!--{% if item.picture %}
-                    <img class="card-img-top" src="{{ item.picture.url }}" alt="{{ item.food }}">
+                    <img class="card-img-top" src="{{ item.picture.url }}" alt="{{ item.recipe_name }}">
                     <div class="card-img-overlay">
-                        <h4 class="card-title">{{ item.food }}</h4>
+                        <h4 class="card-title">{{ item.recipe_name }}</h4>
                         {% if item.|length > 50 %}
                         <p class="card-text">{{ item.description|slice:"0:50" }} </p>
                         {% else %}
                         <p class="card-text">{{ item.description }} </p>
                         {% endif %}
-                        <a href="{% url 'view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary" id="view-recipe-button">View Recipe</a>
+                        <a href="{% url 'view_recipe' uid=item.uid %}" class="btn btn-outline-secondary" id="view-recipe-button">View Recipe</a>
                     </div>
                     {% else %}-->
                     <div class="card-body">
-                        {% if item.food_type == "Appetizer" %}
-                        <i class="fas fa-utensils" title="Appetizer Recipe" id="food-icon"></i> {% elif item.food_type == "Breakfast" %}
-                        <i class="fas fa-bacon" title="Breakfast Recipe" id="food-icon"></i> {% elif item.food_type == "Dinner" %}
-                        <i class="fas fa-hamburger" title="Dinner Recipe" id="food-icon"></i> {% elif item.food_type == "Dessert" %}
+                        {% if item.recipe_type == "Appetizer" %}
+                        <i class="fas fa-utensils" title="Appetizer Recipe" id="food-icon"></i> {% elif item.recipe_type == "Breakfast" %}
+                        <i class="fas fa-bacon" title="Breakfast Recipe" id="food-icon"></i> {% elif item.recipe_type == "Dinner" %}
+                        <i class="fas fa-hamburger" title="Dinner Recipe" id="food-icon"></i> {% elif item.recipe_type == "Dessert" %}
                         <i class="fas fa-ice-cream" title="Dessert Recipe" id="food-icon"></i>{% else %} {% endif %}
-                        <h4 class="card-title">{{ item.food }} {% if item.users|length > 1 %} <span class="badge badge-info" title="Shared with {{item.users|length}} people">{{item.users|length}}</span> {% else %}
+                        <h4 class="card-title">{{ item.recipe_name }} {% if item.users|length > 1 %} <span class="badge badge-info" title="Shared with {{item.users|length}} people">{{item.users|length}}</span> {% else %}
                             <span class="badge badge-info" title="Shared with {{item.users|length}} person">{{item.users|length}}</span> {% endif %}
                         </h4>
 
@@ -39,7 +39,7 @@
                         {% else %}
                         <p class="card-text">Serves: -</p>
                         {% endif %}
-                        <a href="{% url 'recipe:view_recipe' enc=item.encrypt %}" class="btn btn-outline-secondary" id="view-recipe-button">View Recipe</a>
+                        <a href="{% url 'recipe:view_recipe' uid=item.uid %}" class="btn btn-outline-secondary" id="view-recipe-button">View Recipe</a>
                     </div>
                     <!--{% endif %}-->
                 </div>

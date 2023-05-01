@@ -11,11 +11,11 @@ def get_image_path(instance, filename):
 
 
 class Recipe(models.Model):
-    food = models.CharField(max_length=80, default="")
-    food_type = models.CharField(max_length=50, default="")
+    recipe_name = models.CharField(max_length=80, default="")
+    recipe_type = models.CharField(max_length=50, default="")
     description = models.CharField(max_length=300)
     picture = models.ImageField(upload_to=get_image_path, null=True, blank=True)
-    encrypt = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
+    uid = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
     cook_time = models.IntegerField(default=0)
     serves = models.IntegerField(default=0)
     ingredients = ArrayField(

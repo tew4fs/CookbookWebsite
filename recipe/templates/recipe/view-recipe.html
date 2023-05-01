@@ -9,8 +9,8 @@
 <nav class="navbar navbar-light" id="edit-bar">
     <div class="mr-auto">
         {% if is_owner %}
-        <a href="{% url 'recipe:edit_recipe' enc=recipe.encrypt %}"><button class="btn btn-outline-secondary" id="edit-recipe-button">Edit Recipe</button></a>
-        <a href="{% url 'recipe:edit_people' enc=recipe.encrypt %}"><button class="btn btn-outline-secondary" id="edit-people-button">Manage People</button></a>
+        <a href="{% url 'recipe:edit_recipe' uid=recipe.uid %}"><button class="btn btn-outline-secondary" id="edit-recipe-button">Edit Recipe</button></a>
+        <a href="{% url 'recipe:edit_people' uid=recipe.uid %}"><button class="btn btn-outline-secondary" id="edit-people-button">Manage People</button></a>
         <button class="btn btn-outline-secondary" id="delete-recipe-button" data-toggle="modal" data-target="#delete-modal">Delete Recipe</button> {% else %}
         <button class="btn btn-outline-secondary ml-sm-3" id="remove-user-button" data-toggle="modal" data-target="#remove-modal">Remove Recipe</button> {% endif %}
     </div>
@@ -21,7 +21,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="delete-modal-label">{{recipe.food}}</h5>
+                <h5 class="modal-title" id="delete-modal-label">{{recipe.recipe_name}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -31,7 +31,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <a href="{% url 'recipe:delete_recipe' enc=recipe.encrypt %}"><button type="button" class="btn btn-danger">Delete</button></a>
+                <a href="{% url 'recipe:delete_recipe' uid=recipe.uid %}"><button type="button" class="btn btn-danger">Delete</button></a>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="remove-modal-label">{{recipe.food}}</h5>
+                <h5 class="modal-title" id="remove-modal-label">{{recipe.recipe_name}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -51,7 +51,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <a href="{% url 'recipe:remove_recipe' enc=recipe.encrypt %}"><button type="button" class="btn btn-danger">Remove</button></a>
+                <a href="{% url 'recipe:remove_recipe' uid=recipe.uid %}"><button type="button" class="btn btn-danger">Remove</button></a>
             </div>
         </div>
     </div>
@@ -63,10 +63,10 @@
             <div class="card" id="food-description-box">
                 <div class="card-body">
                     <h3 class="card-title text-center">
-                        {{ recipe.food }}
+                        {{ recipe.recipe_name }}
                     </h3>
                     {% if recipe.picture %}
-                    <img id="food-img" src="{{ recipe.picture }}" alt="{{ recipe.food }}"> {% endif %}
+                    <img id="food-img" src="{{ recipe.picture }}" alt="{{ recipe.recipe_name }}"> {% endif %}
                     <div class="card-text text-center">
                         {{ recipe.description }}
                     </div>

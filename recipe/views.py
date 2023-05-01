@@ -3,8 +3,10 @@ from django.contrib.auth.models import User
 from login.models import Notification, Unverified
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView, DetailView
 from .models import Recipe
+
+from typing import Any, Dict
 
 
 # Create your views here.
@@ -23,29 +25,7 @@ def home(request):
         recipes = search(query, "All", request)
         content = {"recipes": recipes}
     else:
-        """appetizers = Recipe.objects.filter(food_type="Appetizer")
-        breakfast = Recipe.objects.filter(food_type="Breakfast")
-        dinner = Recipe.objects.filter(food_type="Dinner")
-        desserts = Recipe.objects.filter(food_type="Dessert")
-        for rec in appetizers:
-            if request.user.pk not in rec.users:
-                appetizers = appetizers.exclude(pk=rec.pk)
-        appetizers = appetizers[0:4]
-        for rec in breakfast:
-            if request.user.pk not in rec.users:
-                breakfast = breakfast.exclude(pk=rec.pk)
-        breakfast = breakfast[0:4]
-        for rec in dinner:
-            if request.user.pk not in rec.users:
-                dinner = dinner.exclude(pk=rec.pk)
-        dinner = dinner[0:4]
-        for rec in desserts:
-            if request.user.pk not in rec.users:
-                desserts = desserts.exclude(pk=rec.pk)
-        desserts = desserts[0:4]
-        content = {'appetizers': appetizers, 'breakfast': breakfast, 'dinner': dinner, 'desserts': desserts, 'notifications': notifications,}
-        """
-        recipes = Recipe.objects.all().order_by("food")
+        recipes = Recipe.objects.all().order_by("recipe_name")
         for rec in recipes:
             if request.user.pk not in rec.users:
                 recipes = recipes.exclude(pk=rec.pk)
@@ -60,17 +40,12 @@ class Appetizers(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         notifications = Notification.objects.filter(to_user=self.request.user.pk)
-        query = self.request.GET.get("q")
-        if query:
-            recipes = search(query, "Appetizer", self.request)
-            context["recipes"] = recipes
-        else:
-            appetizers = Recipe.objects.filter(food_type="Appetizer")
-            for rec in appetizers:
-                if self.request.user.pk not in rec.users:
-                    appetizers = appetizers.exclude(pk=rec.pk)
-            context["appetizers"] = appetizers
-            context["notifications"] = notifications
+        appetizers = Recipe.objects.filter(recipe_type="Appetizer")
+        for recipe in appetizers:
+            if self.request.user.pk not in recipe.users:
+                appetizers = appetizers.exclude(pk=recipe.pk)
+        context["appetizers"] = appetizers
+        context["notifications"] = notifications
         return context
 
 
@@ -93,7 +68,6 @@ class Breakfast(TemplateView):
             context["breakfast"] = breakfast
             context["notifications"] = notifications
         return context
-
 
 @login_required
 def dinner(request):
@@ -127,58 +101,34 @@ def desserts(request):
     return render(request, "recipe/dessert.html", content)
 
 
-@login_required
-def create_recipe(request):
-    if len(Unverified.objects.filter(user=request.user.pk)) > 0:
-        return HttpResponseRedirect("../")
-    notifications = Notification.objects.filter(to_user=request.user.pk)
-    content = {"notifications": notifications}
-    return render(request, "recipe/create-recipe.html", content)
+@method_decorator(login_required, name="dispatch")
+class CreateRecipe(CreateView):
+    model = Recipe
+    template_name = "recipe/create-recipe.html"
+    fields = ["recipe_name", "recipe_type", "description", "cook_time", "serves", "ingredients", "steps"]
+    success_url = "."
+
+    def form_valid(self, form):
+        is_valid = super().form_valid(form)
+        self.object.users.append(self.request.user.pk)
+        self.object.save()
+        return is_valid
 
 
-@login_required
-def create(request):
-    food = request.POST.get("food")
-    foodCat = request.POST.get("foodCat")
-    desc = request.POST.get("description")
-    rec = Recipe(food=food, food_type=foodCat, description=desc)
-    for i in range(50):
-        s = request.POST.get(str(i))
-        if s is not None:
-            rec.steps.append(s)
-    for i in range(100, 150):
-        s = request.POST.get(str(i))
-        if s is not None:
-            rec.ingredients.append(s)
-    """
-    if request.POST.get('pic') != "":
-        pic = request.FILES['pic']
-        pic_str = str(pic)
-        pic_str = pic_str[len(pic_str)-4:len(pic_str)]
-        if pic_str == '.png' or pic_str == '.jpg' or pic_str == 'jpeg' or pic_str == '.PNG' or pic_str == '.JPG' or pic_str == 'JPEG':
-            fs = FileSystemStorage()
-            pic_file = fs.save(pic.name, pic)
-            url = fs.url(pic_file)
-            rec.picture = url
-    """
-    if request.POST.get("cook_time") is not None:
-        rec.cook_time = request.POST.get("cook_time")
-    if request.POST.get("serves") is not None:
-        rec.serves = request.POST.get("serves")
-    rec.users.append(request.user.pk)
-    rec.save()
-    return HttpResponseRedirect("../")
+@method_decorator(login_required, name="dispatch")
+class ViewRecipe(DetailView):
+    model = Recipe
+    template_name = "recipe/view-recipe.html"
+    context_object_name = "recipe"
 
-
-@login_required
-def view_recipe(request, enc):
-    notifications = Notification.objects.filter(to_user=request.user.pk)
-    recipe = get_object_or_404(Recipe, encrypt=enc)
-    owner = False
-    if recipe.users[0] == request.user.pk:
-        owner = True
-    content = {"recipe": recipe, "notifications": notifications, "is_owner": owner}
-    return render(request, "recipe/view-recipe.html", content)
+    def get_object(self, queryset=None):
+        return Recipe.objects.get(uid=self.kwargs.get("uid"))
+    
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["is_owner"] = context["recipe"].users[0] == self.request.user.pk
+        context["notifications"] = Notification.objects.filter(to_user=self.request.user.pk)
+        return context
 
 
 @login_required

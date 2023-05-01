@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'recipe:create' %}" method="POST" enctype="multipart/form-data" autocomplete="off">
+<form method="post">
     {% csrf_token %}
     <div class="container">
         <div class="row">
@@ -15,18 +15,18 @@
                     <div class="card-body">
                         <div class="card-text">
                             <h5 class="card-title">Food Description</h5>
-                            <input class="form-control" type="text" name="food" placeholder="Food Name" maxlength="35" required>
-                            <select class="form-control" name="foodCat" required>
+                            <input class="form-control" type="text" name="{{ form.recipe_name.html_name }}" placeholder="Food Name" maxlength="35" required>
+                            <select class="form-control" name="{{ form.recipe_type.html_name }}" required>
                                 <option>Appetizer</option>
                                 <option>Breakfast</option>
                                 <option>Dinner</option>
                                 <option>Dessert</option>
                             </select>
-                            <textarea class="form-control" type="textarea" name="description" placeholder="Description" maxLength="300"></textarea>
+                            <textarea class="form-control" type="textarea" name="{{ form.description.html_name }}" placeholder="Description" maxLength="300"></textarea>
                             <label for="cook-time">Cook Time in Minutes (0-500)</label>
-                            <input class="form-control" name="cook_time" id="cook-time" type="number" min="0" max="500" value="0"></input>
+                            <input class="form-control" name="{{ form.cook_time.html_name }}" id="cook-time" type="number" min="0" max="500" value="0"></input>
                             <label for="serves">Serves (0-100)</label>
-                            <input class="form-control" name="serves" id="serves" type="number" min="0" max="100" value="0"></input>
+                            <input class="form-control" name="{{ form.serves.html_name }}" id="serves" type="number" min="0" max="100" value="0"></input>
                             <!--<label for="file-up">Picture (.jpg or .png)</label>
                             <input class="form-control-file" type="file" accept="image/*" id="file-up" onchange="readURL(this);" name="pic" />
                             <img id="food-pic" src="//:0" />-->
@@ -41,6 +41,7 @@
                             <h5 class="card-title">Ingredients</h5>
                             <div id="ingredients">
                             </div>
+                            <input type="text" id="ingredients-list" name="{{ form.ingredients.html_name }}" hidden="true"></input>
                         </div>
                         <div class="container-fluid">
                             <div class="row">
@@ -62,6 +63,7 @@
                             <h5 class="card-title">Steps</h5>
                             <div id="steps">
                             </div>
+                            <input type="text" id="steps-list" name="{{ form.steps.html_name }}" hidden="true"></input>
                         </div>
                         <div class="container-fluid">
                             <div class="row">
@@ -79,7 +81,7 @@
         </div>
     </div>
     <div class="d-flex justify-content-end">
-        <button class="btn btn-primary" type="submit" id="save">Save</button>
+        <button class="btn btn-primary" type="submit" onclick="updateLists()" id="save">Save</button>
     </div>
 </form>
 {% endblock %}
