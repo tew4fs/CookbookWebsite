@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'recipe:people' recipe.encrypt %}" method="POST" enctype="multipart/form-data" autocomplete="off">
+<form method="post">
     {% csrf_token %}
     <div class="container">
         <div class="row">
@@ -18,7 +18,9 @@
                                 People
                             </h3>
                             <div id="users">
+                                <input class="form-control" type="email" disabled="true" value="{{ owner_email }}"/>
                             </div>
+                            <input type="text" id="people-list" name="{{ form.users.html_name }}" hidden="true"></input>
                         </div>
                         <div class="container-fluid">
                             <div class="row">
@@ -36,7 +38,7 @@
         </div>
     </div>
     <div class="d-flex justify-content-end">
-        <button class="btn btn-primary" type="submit" id="save">Save</button>
+        <button class="btn btn-primary" type="submit" id="save" onclick="updatePeopleList()">Save</button>
     </div>
 </form>
 {% endblock %}
@@ -44,19 +46,9 @@
 {% block scripts %}
 <script>
     function onLoad() {
-        var i = 0;
-        '{% for user in users %}'
-        var users = document.getElementById("users");
-        var nextUser = document.createElement("input");
-        nextUser.type = "email"
-        nextUser.name = i;
-        nextUser.maxLength = 50;
-        nextUser.value = '{{user}}';
-        nextUser.className = "form-control";
-        if (i == 0)
-            nextUser.disabled = "disabled";
-        users.append(nextUser);
-        i++
+        '{% for user in recipe.users %}'
+        user = addPerson()
+        user.value = '{{user}}';
         '{% endfor %}'
 
     }

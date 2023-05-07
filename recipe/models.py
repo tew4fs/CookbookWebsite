@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.urls import reverse
 import uuid
 import os
 
@@ -28,8 +29,12 @@ class Recipe(models.Model):
         default=list,
         size=100,
     )
+    owner = models.IntegerField(default=-1)
     users = ArrayField(
-        models.IntegerField(default=-1),
+        models.CharField(default=""),
         default=list,
         size=1000,
     )
+
+    def get_absolute_url(self):
+        return reverse("recipe:view_recipe", kwargs={"uid": self.uid})

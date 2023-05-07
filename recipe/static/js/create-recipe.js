@@ -1,17 +1,6 @@
 let ingredientCount = 0
 let stepCount = 0
 
-function onLoad() {
-    addIngredient()
-    addIngredient()
-    addIngredient()
-    addStep()
-    addStep()
-    addStep()
-    document.getElementById("food-pic").style.display = "none";
-}
-
-
 function addStep() {
     if (stepCount < 100){
         stepCount++;
@@ -23,6 +12,7 @@ function addStep() {
         nextStep.required = "required";
         nextStep.className = "form-control";
         steps.append(nextStep);
+        return nextStep
     }
 }
 
@@ -43,28 +33,28 @@ function updateStepList(){
         list += ", " + step.value;
     }
     stepsList.value = list;
-    console.log(stepsList.value)
 }
 
 function addIngredient() {
     if (ingredientCount < 100){
         ingredientCount++;
         var ingredients = document.getElementById("ingredients");
-        var nextStep = document.createElement("textarea");
-        nextStep.id = "ingredient_" + ingredientCount;
-        nextStep.maxLength = 100;
-        nextStep.placeholder = "Ingredient " + ingredientCount;
-        nextStep.required = "required";
-        nextStep.className = "form-control";
-        ingredients.append(nextStep);
+        var nextIngredient = document.createElement("textarea");
+        nextIngredient.id = "ingredient_" + ingredientCount;
+        nextIngredient.maxLength = 100;
+        nextIngredient.placeholder = "Ingredient " + ingredientCount;
+        nextIngredient.required = "required";
+        nextIngredient.className = "form-control";
+        ingredients.append(nextIngredient);
+        return nextIngredient
     }
 }
 
 function removeIngredient() {
     if (ingredientCount > 1){
         var ingredients = document.getElementById("ingredients");
-        var lastStep = ingredients.lastElementChild;
-        lastStep.remove();
+        var lastIngredient = ingredients.lastElementChild;
+        lastIngredient.remove();
         ingredientCount--;
     }
 }
@@ -82,6 +72,16 @@ function updateIngredientList(){
 function updateLists(){
     updateIngredientList();
     updateStepList();
+}
+
+function onLoad() {
+    addIngredient()
+    addIngredient()
+    addIngredient()
+    addStep()
+    addStep()
+    addStep()
+    document.getElementById("food-pic").style.display = "none";
 }
 
 function readURL(input) {
