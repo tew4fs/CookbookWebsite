@@ -4,21 +4,27 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Notification',
+            name="Notification",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('recipe_id', models.CharField(default='', max_length=100)),
-                ('from_user', models.CharField(default='', max_length=80)),
-                ('to_user', models.CharField(default='', max_length=80)),
-                ('read', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("recipe_id", models.CharField(default="", max_length=100)),
+                ("from_user", models.CharField(default="", max_length=80)),
+                ("to_user", models.CharField(default="", max_length=80)),
+                ("read", models.BooleanField(default=False)),
             ],
         ),
     ]

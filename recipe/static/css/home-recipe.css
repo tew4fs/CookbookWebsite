@@ -1,13 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
-body {
-    /*background: url("../images/texture.png") repeat #cfcfcf;*/
-    background-color: #D3D3D3;
-}
 
-#main-navbar {
-    background-color: #FF7F50 !important;
-    box-shadow: 0 0 10px;
-}
 
 #food-icon {
     position: absolute;

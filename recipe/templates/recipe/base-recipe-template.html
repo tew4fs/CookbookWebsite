@@ -1,0 +1,18 @@
+{% extends "base-template.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home-recipe.css' %}">
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-light" id="recipe-bar">
+    <a href="{% url 'recipe:create_recipe' %}" class="mr-auto" id="create-link"><button class="btn btn-outline-secondary" id="create-button">Create Recipe</button></a>
+    <form class="form-inline ml-auto" id="search-form-box">
+        <input class="form-control mr-sm-2" id="search-box" type="search" name="q" placeholder="Search" aria-label="Search" value="{{request.GET.q}}">
+        <button class="btn btn-outline-secondary my-2 my-sm-0" id="search-button" type="submit">Search</button>
+    </form>
+</nav>
+{% block recipes-block %}
+{% endblock %}
+{% endblock %}

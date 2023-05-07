@@ -1,272 +1,171 @@
-from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, redirect
-from django.core.files.storage import FileSystemStorage
-from django.contrib.postgres.fields import ArrayField
-from django.contrib import messages
-from django.contrib.auth.models import User 
+from django.db import models
+from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
+from django.contrib.auth.models import User
 from login.models import Notification, Unverified
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView, CreateView, DetailView, UpdateView
 from .models import Recipe
-import os
+
+from typing import Any, Dict, Optional
+
 
 # Create your views here.
-
+@login_required
 def index(request):
-    return HttpResponseRedirect('home/')
+    return HttpResponseRedirect("home/")
 
-def home(request):
-    if request.user.is_authenticated == False:
-        return HttpResponseRedirect('../../get-started/login/')
-    notifications = Notification.objects.filter(to_user=request.user.pk)
-    query = request.GET.get("q")
-    if query:
-        recipes = search(query, "All", request)
-        content = {'recipes': recipes}
-    else:
-        '''appetizers = Recipe.objects.filter(food_type="Appetizer")
-        breakfast = Recipe.objects.filter(food_type="Breakfast")
-        dinner = Recipe.objects.filter(food_type="Dinner")
-        desserts = Recipe.objects.filter(food_type="Dessert")
-        for rec in appetizers:
-            if request.user.pk not in rec.users:
-                appetizers = appetizers.exclude(pk=rec.pk)
-        appetizers = appetizers[0:4]
-        for rec in breakfast:
-            if request.user.pk not in rec.users:
-                breakfast = breakfast.exclude(pk=rec.pk)
-        breakfast = breakfast[0:4]
-        for rec in dinner:
-            if request.user.pk not in rec.users:
-                dinner = dinner.exclude(pk=rec.pk)
-        dinner = dinner[0:4]
-        for rec in desserts:
-            if request.user.pk not in rec.users:
-                desserts = desserts.exclude(pk=rec.pk)
-        desserts = desserts[0:4]
-        content = {'appetizers': appetizers, 'breakfast': breakfast, 'dinner': dinner, 'desserts': desserts, 'notifications': notifications,}'''
-        recipes = Recipe.objects.all().order_by('food')
-        for rec in recipes:
-            if request.user.pk not in rec.users:
-                recipes = recipes.exclude(pk=rec.pk)
-        content = {'notifications': notifications, 'recipes': recipes}
-    return render(request, 'recipe/home.html', content)
 
-def appetizers(request):
-    if request.user.is_authenticated == False:
-        return HttpResponseRedirect('../../get-started/login/')
-    notifications = Notification.objects.filter(to_user=request.user.pk)
-    query = request.GET.get("q")
-    if query:
-        recipes = search(query, "Appetizer", request)
-        content = {'recipes': recipes}
-    else:
-        appetizers = Recipe.objects.filter(food_type="Appetizer")
-        for rec in appetizers:
-            if request.user.pk not in rec.users:
-                appetizers = appetizers.exclude(pk=rec.pk)
-        content = {'appetizers': appetizers, 'notifications': notifications}
-    return render(request, 'recipe/appetizers.html', content)
+@method_decorator(login_required, name="dispatch")
+class AllRecipes(TemplateView):
+    template_name = "recipe/home.html"
 
-def breakfast(request):
-    if request.user.is_authenticated == False:
-        return HttpResponseRedirect('../../get-started/login/')
-    notifications = Notification.objects.filter(to_user=request.user.pk)
-    query = request.GET.get("q")
-    if query:
-        recipes = search(query, "Breakfast", request)
-        content = {'recipes': recipes}
-    else:
-        breakfast = Recipe.objects.filter(food_type="Breakfast")
-        for rec in breakfast:
-            if request.user.pk not in rec.users:
-                breakfast = breakfast.exclude(pk=rec.pk)
-        content = {'breakfast': breakfast, 'notifications': notifications}
-    return render(request, 'recipe/breakfast.html', content)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        recipes = Recipe.objects.filter(pk__contains=self.request.user.pk)
+        notifications = Notification.objects.filter(to_user=self.request.user.pk)
+        query = self.request.GET.get("q")
+        if query:
+            recipes = search(query, recipes)
+        context["recipes"] = recipes
+        context["notifications"] = notifications
+        return context
 
-def dinner(request):
-    if request.user.is_authenticated == False:
-        return HttpResponseRedirect('../../get-started/login/')
-    notifications = Notification.objects.filter(to_user=request.user.pk)
-    query = request.GET.get("q")
-    if query:
-        recipes = search(query, "Dinner", request)
-        content = {'recipes': recipes}
-    else:
-        dinner = Recipe.objects.filter(food_type="Dinner")
-        for rec in dinner:
-            if request.user.pk not in rec.users:
-                dinner = dinner.exclude(pk=rec.pk)
-        content = {'dinner': dinner, 'notifications': notifications}
-    return render(request, 'recipe/dinner.html', content)
 
-def desserts(request):
-    if request.user.is_authenticated == False:
-        return HttpResponseRedirect('../../get-started/login/')
-    notifications = Notification.objects.filter(to_user=request.user.pk)
-    query = request.GET.get("q")
-    if query:
-        recipes = search(query, "Dessert", request)
-        content = {'recipes': recipes}
-    else:
-        desserts = Recipe.objects.filter(food_type="Dessert")
-        for rec in desserts:
-            if request.user.pk not in rec.users:
-                desserts = desserts.exclude(pk=rec.pk)
-        content = {'desserts': desserts, 'notifications': notifications}
-    return render(request, 'recipe/dessert.html', content)
+@method_decorator(login_required, name="dispatch")
+class Appetizers(TemplateView):
+    template_name = "recipe/appetizers.html"
 
-def create_recipe(request):
-    if request.user.is_authenticated == False:
-        return HttpResponseRedirect('../../get-started/login/')
-    if len(Unverified.objects.filter(user=request.user.pk)) > 0:
-        return HttpResponseRedirect('../')
-    notifications = Notification.objects.filter(to_user=request.user.pk)
-    content = {'notifications': notifications}
-    return render(request, 'recipe/create-recipe.html', content)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        appetizers_recipes = Recipe.objects.filter(recipe_type="Appetizers", pk__contains=self.request.user.pk)
+        notifications = Notification.objects.filter(to_user=self.request.user.pk)
+        query = self.request.GET.get("q")
+        if query:
+            appetizers_recipes = search(query, appetizers_recipes)
+        context["appetizers"] = appetizers_recipes
+        context["notifications"] = notifications
+        return context
 
-def create(request):
-    food = request.POST.get('food')
-    foodCat = request.POST.get('foodCat')
-    desc = request.POST.get('description')
-    rec = Recipe(food=food, food_type=foodCat, description=desc)
-    for i in range(50):
-        s = request.POST.get(str(i))
-        if s is not None:
-            rec.steps.append(s)
-    for i in range(100, 150):
-        s = request.POST.get(str(i))
-        if s is not None:
-            rec.ingredients.append(s)
-    '''
-    if request.POST.get('pic') != "":
-        pic = request.FILES['pic']
-        pic_str = str(pic)
-        pic_str = pic_str[len(pic_str)-4:len(pic_str)]
-        if pic_str == '.png' or pic_str == '.jpg' or pic_str == 'jpeg' or pic_str == '.PNG' or pic_str == '.JPG' or pic_str == 'JPEG':
-            fs = FileSystemStorage()
-            pic_file = fs.save(pic.name, pic)
-            url = fs.url(pic_file)
-            rec.picture = url
-    '''
-    if request.POST.get('cook_time') is not None:
-        rec.cook_time = request.POST.get('cook_time')
-    if request.POST.get('serves') is not None:
-        rec.serves = request.POST.get('serves')
-    rec.users.append(request.user.pk)
-    rec.save()
-    return HttpResponseRedirect('../')
 
-def view_recipe(request, enc):
-    if request.user.is_authenticated == False:
-        return HttpResponseRedirect('../../../get-started/login/')
-    notifications = Notification.objects.filter(to_user=request.user.pk)
-    recipe = get_object_or_404(Recipe, encrypt=enc)
-    owner = False
-    if recipe.users[0] == request.user.pk:
-        owner = True
-    content = {'recipe': recipe, 'notifications': notifications, 'is_owner': owner}
-    return render(request, 'recipe/view-recipe.html', content)
+@method_decorator(login_required, name="dispatch")
+class Breakfast(TemplateView):
+    template_name = "recipe/breakfast.html"
 
-def edit_recipe(request, enc):
-    if request.user.is_authenticated == False:
-        return HttpResponseRedirect('../../../get-started/login/')
-    notifications = Notification.objects.filter(to_user=request.user.pk)
-    recipe = get_object_or_404(Recipe, encrypt=enc)
-    if request.user.pk != recipe.users[0]:
-        return HttpResponseRedirect('../../view-recipe/' + str(recipe.encrypt) +'/')
-    content = {'recipe': recipe, 'notifications': notifications}
-    return render(request, 'recipe/edit-recipe.html', content)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        breakfast_recipes = Recipe.objects.filter(recipe_type="Breakfast", pk__contains=self.request.user.pk)
+        notifications = Notification.objects.filter(to_user=self.request.user.pk)
+        query = self.request.GET.get("q")
+        if query:
+            breakfast_recipes = search(query, breakfast_recipes)
+        context["breakfast"] = breakfast_recipes
+        context["notifications"] = notifications
+        return context
 
-def edit(request, enc):
-    recipe = get_object_or_404(Recipe, encrypt=enc)
-    if request.user.pk != recipe.users[0]:
-        return HttpResponseRedirect('../../../view-recipe/' + str(recipe.encrypt) +'/')
-    recipe.food = request.POST.get('food')
-    recipe.food_type = request.POST.get('foodCat')
-    recipe.description = request.POST.get('description')
-    recipe.steps.clear()
-    recipe.ingredients.clear()
-    for i in range(50):
-        s = request.POST.get(str(i))
-        if s is not None:
-            recipe.steps.append(s)
-    for i in range(100, 150):
-        s = request.POST.get(str(i))
-        if s is not None:
-            recipe.ingredients.append(s)
-    '''
-    if request.POST.get('pic') != "":
-        pic = request.FILES['pic']
-        pic_str = str(pic)
-        pic_str = pic_str[len(pic_str)-4:len(pic_str)]
-        if pic_str == '.png' or pic_str == '.jpg' or pic_str == 'jpeg' or pic_str == '.PNG' or pic_str == '.JPG' or pic_str == 'JPEG':
-            fs = FileSystemStorage()
-            pic_file = fs.save(pic.name, pic)
-            url = fs.url(pic_file)
-            recipe.picture = url
-    '''
-    if request.POST.get('cook_time') is not None:
-        recipe.cook_time = request.POST.get('cook_time')
-    if request.POST.get('serves') is not None:
-        recipe.serves = request.POST.get('serves')
-    recipe.save()
-    return HttpResponseRedirect('../../../view-recipe/' + str(recipe.encrypt) +'/')
 
-def remove_picture(request, enc):
-    recipe = get_object_or_404(Recipe, encrypt=enc)
-    if request.user.pk != recipe.users[0]:
-        return redirect('home')
-    recipe.picture = ""
-    recipe.save()
-    return redirect('edit_recipe', enc=enc)
+@method_decorator(login_required, name="dispatch")
+class Dinner(TemplateView):
+    template_name = "recipe/dinner.html"
 
-def edit_people(request, enc):
-    if request.user.is_authenticated == False:
-        return HttpResponseRedirect('../../../get-started/login/')
-    notifications = Notification.objects.filter(to_user=request.user.pk)
-    recipe = get_object_or_404(Recipe, encrypt=enc)
-    if request.user.pk != recipe.users[0]:
-        return HttpResponseRedirect('../../view-recipe/' + str(recipe.encrypt) +'/')
-    users = list()
-    for item in recipe.users:
-        users.append(User.objects.get(pk=item))
-    content = {'recipe': recipe, 'users': users, 'notifications': notifications}
-    return render(request, 'recipe/edit-people.html', content)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        dinner_recipes = Recipe.objects.filter(recipe_type="Dinner", pk__contains=self.request.user.pk)
+        notifications = Notification.objects.filter(to_user=self.request.user.pk)
+        query = self.request.GET.get("q")
+        if query:
+            dinner_recipes = search(query, dinner_recipes)
+        context["dinner"] = dinner_recipes
+        context["notifications"] = notifications
+        return context
 
-def people(request, enc):
-    notification_list = list()
-    user_list = list()
-    for i in range(50):
-        if request.POST.get(str(i)) is not None and User.objects.filter(username=request.POST.get(str(i))).count() == 1: 
-            user = User.objects.get(username=request.POST.get(str(i)))
-            notification_list.append(user.pk)
-    recipe = get_object_or_404(Recipe, encrypt=enc)
-    for user in recipe.users:
-        for item in notification_list:
-            if user == item:
-                user_list.append(item)
-                break
-    for item in user_list:
-        while item in notification_list:
-            notification_list.remove(item)
-    owner = recipe.users[0]
-    recipe.users.clear()
-    recipe.users.append(owner)
-    for item in user_list:
-        recipe.users.append(item)
-    recipe.save()
-    for item in notification_list:
-        duplicates = Notification.objects.filter(recipe_id=enc, from_user=request.user.pk, to_user=item)
-        if duplicates.count() == 0:
-            notification = Notification(recipe_id=enc, from_user=request.user.pk, to_user=item)
-            notification.save()
-    return HttpResponseRedirect('../')
 
-def delete_recipe(request, enc):
-    recipe = get_object_or_404(Recipe, encrypt=enc)
-    if request.user.pk != recipe.users[0]:
-        return HttpResponseRedirect('../../view-recipe/' + str(recipe.encrypt) +'/')
+@method_decorator(login_required, name="dispatch")
+class Desserts(TemplateView):
+    template_name = "recipe/desserts.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        desserts_recipes = Recipe.objects.filter(recipe_type="Dessert", pk__contains=self.request.user.pk)
+        notifications = Notification.objects.filter(to_user=self.request.user.pk)
+        query = self.request.GET.get("q")
+        if query:
+            desserts_recipes = search(query, desserts_recipes)
+        context["desserts"] = desserts_recipes
+        context["notifications"] = notifications
+        return context
+
+
+@method_decorator(login_required, name="dispatch")
+class CreateRecipe(CreateView):
+    model = Recipe
+    template_name = "recipe/create-recipe.html"
+    fields = ["recipe_name", "recipe_type", "description", "cook_time", "serves", "ingredients", "steps"]
+    success_url = "."
+
+    def form_valid(self, form):
+        is_valid = super().form_valid(form)
+        self.object.owner = self.request.user.pk
+        self.object.save()
+        return is_valid
+
+
+@method_decorator(login_required, name="dispatch")
+class ViewRecipe(DetailView):
+    model = Recipe
+    template_name = "recipe/view-recipe.html"
+    context_object_name = "recipe"
+
+    def get_object(self, queryset=None):
+        return Recipe.objects.get(uid=self.kwargs.get("uid"))
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["is_owner"] = context["recipe"].owner == self.request.user.pk
+        context["notifications"] = Notification.objects.filter(to_user=self.request.user.pk)
+        return context
+
+
+@method_decorator(login_required, name="dispatch")
+class EditRecipe(UpdateView):
+    model = Recipe
+    template_name = "recipe/edit-recipe.html"
+    fields = ["recipe_name", "recipe_type", "description", "cook_time", "serves", "ingredients", "steps"]
+
+    def get_object(self, queryset=None):
+        return Recipe.objects.get(uid=self.kwargs.get("uid"))
+
+
+@method_decorator(login_required, name="dispatch")
+class EditPeople(UpdateView):
+    model = Recipe
+    template_name = "recipe/edit-people.html"
+    fields = ["users"]
+
+    def get_object(self, queryset=None):
+        return Recipe.objects.get(uid=self.kwargs.get("uid"))
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["owner_email"] = self.request.user.username
+        return context
+
+    def form_valid(self, form):
+        is_valid = super().form_valid(form)
+        print(self.object.users)
+        return is_valid
+
+
+@login_required
+def delete_recipe(request, uid):
+    recipe = get_object_or_404(Recipe, uid=uid)
+    if request.user.pk != recipe.owner:
+        return HttpResponseRedirect("../../view-recipe/" + str(recipe.encrypt) + "/")
     recipe.delete()
-    return HttpResponseRedirect('../../')
+    return HttpResponseRedirect("../../")
 
+
+@login_required
 def remove_recipe(request, enc):
     recipe = get_object_or_404(Recipe, encrypt=enc)
     user_list = list()
@@ -277,21 +176,10 @@ def remove_recipe(request, enc):
     for item in user_list:
         recipe.users.append(item)
     recipe.save()
-    return HttpResponseRedirect('../../')
+    return HttpResponseRedirect("../../")
 
-def search(query, category, request):
-    if category != "All":
-        recipes = Recipe.objects.filter(food_type=category)
-    else:
-        recipes = Recipe.objects.all()
-    recipes = recipes.filter(food__icontains=query)
+
+def search(query, recipes):
+    recipes = recipes.filter(recipe_name__icontains=query)
     recipes_query_descriptions = recipes.filter(description__contains=query)
-    recipes = list(recipes)
-    recipes_query_descriptions = list(recipes_query_descriptions)
-    for rec in recipes_query_descriptions:
-        if rec not in recipes:
-            recipes.append(rec)
-        for rec in recipes:
-            if request.user.pk not in rec.users:
-                recipes = recipes.exclude(pk=rec.pk)
-    return recipes
+    return (recipes | recipes_query_descriptions).distinct()
