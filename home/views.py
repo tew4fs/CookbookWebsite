@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.views.generic import TemplateView
+
 from login.models import Notification
 
+class LandingPage(TemplateView):
+    template_name = "home/home.html"
 
-# Create your views here.
-def index(request):
-    notifications = Notification.objects.filter(to_user=request.user.pk)
-    content = {"notifications": notifications}
-    print(request.META.get("HTTP_REFERER"))
-    return render(request, "home/home.html", content)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        notifications = Notification.objects.filter(to_user=self.request.user.pk)
+        context["notifications"] = notifications
+        return context

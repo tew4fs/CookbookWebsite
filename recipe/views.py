@@ -1,19 +1,18 @@
-from django.db import models
-from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
-from django.contrib.auth.models import User
-from login.models import Notification, Unverified
-from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import TemplateView, CreateView, DetailView, UpdateView
-from .models import Recipe
+from django.utils.decorators import method_decorator
 
-from typing import Any, Dict, Optional
+from recipe.models import Recipe
+from login.models import Notification
+
+from typing import Any, Dict
 
 
 # Create your views here.
 @login_required
 def index(request):
-    return HttpResponseRedirect("home/")
+    return redirect("recipe:home")
 
 
 @method_decorator(login_required, name="dispatch")
@@ -38,13 +37,10 @@ class Appetizers(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        appetizers_recipes = Recipe.objects.filter(recipe_type="Appetizers", pk__contains=self.request.user.pk)
-        notifications = Notification.objects.filter(to_user=self.request.user.pk)
+        username = self.request.user.username
         query = self.request.GET.get("q")
-        if query:
-            appetizers_recipes = search(query, appetizers_recipes)
-        context["appetizers"] = appetizers_recipes
-        context["notifications"] = notifications
+        context["appetizers"] = _get_recipes("Appetizers", username, query)
+        context["notifications"] = _get_notifications(self.request.user.pk)
         return context
 
 
@@ -160,9 +156,9 @@ class EditPeople(UpdateView):
 def delete_recipe(request, uid):
     recipe = get_object_or_404(Recipe, uid=uid)
     if request.user.pk != recipe.owner:
-        return HttpResponseRedirect("../../view-recipe/" + str(recipe.encrypt) + "/")
+        return redirect("recipe:view_recipe", kwargs={"uid": recipe.uid})
     recipe.delete()
-    return HttpResponseRedirect("../../")
+    return redirect("recipe:home")
 
 
 @login_required
@@ -176,10 +172,19 @@ def remove_recipe(request, enc):
     for item in user_list:
         recipe.users.append(item)
     recipe.save()
-    return HttpResponseRedirect("../../")
+    return redirect("recipe:home")
 
 
 def search(query, recipes):
     recipes = recipes.filter(recipe_name__icontains=query)
     recipes_query_descriptions = recipes.filter(description__contains=query)
     return (recipes | recipes_query_descriptions).distinct()
+
+def _get_recipes(recipe_type: str, username: str, query):
+    recipes = Recipe.objects.filter(recipe_type=recipe_type, users__contains=username)
+    if query:
+        recipes = search(query, recipes)
+    return recipes
+
+def _get_notifications(pk: int):
+    return Notification.objects.filter(to_user=pk)

@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from recipe import views
 from recipe.views import (
     AllRecipes,
     Appetizers,

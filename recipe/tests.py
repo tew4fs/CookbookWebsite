@@ -15,7 +15,7 @@ class BreakfastRecipeTestCase(TestCase):
         breakfast.ingredients.add("Ingredient 1")
 
     def testBreakfastRecipeWasAdded(self):
-        breakfast_recipes = Recipe.objects.filter(
+        Recipe.objects.filter(
             food="Breakfast Food",
             food_type="breakfast",
             description="A Breakfast Food",

@@ -1,5 +1,7 @@
-from django.urls import path, re_path
+from django.urls import path
 from . import views
+
+app_name = "login"
 
 urlpatterns = [
     path("", views.index, name="index"),
@@ -19,9 +21,4 @@ urlpatterns = [
     ),
     path("settings/", views.settings, name="settings"),
     path("settings/edit", views.settings_edit, name="settings_edit"),
-    re_path(
-        r"^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
-        views.activate,
-        name="activate",
-    ),
 ]
