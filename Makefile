@@ -13,4 +13,7 @@ lint:
 format:
 	pipenv run black .
 
+test:
+	pipenv run python manage.py test
+
 build: format lint run
