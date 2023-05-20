@@ -19,6 +19,7 @@ from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from . import settings
 
+app_name = "landing"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
