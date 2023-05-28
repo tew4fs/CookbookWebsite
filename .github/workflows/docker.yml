@@ -2,7 +2,7 @@ name: Docker CI
 
 on:
   workflow_run:
-    workflows: ["Django CI"]
+    workflows: [Django CI]
     types:
       - completed
 
