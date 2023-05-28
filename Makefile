@@ -7,6 +7,9 @@ run:
 migrate:
 	pipenv run python manage.py migrate
 
+makemigrate:
+	pipenv run python manage.py makemigrate
+
 lint:
 	pipenv run flake8 .
 
@@ -15,5 +18,8 @@ format:
 
 test:
 	pipenv run python manage.py test
+
+docker-build:
+	docker build . -t community-cookbooks
 
 build: format lint run

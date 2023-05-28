@@ -2,6 +2,7 @@ from django.views.generic import TemplateView
 
 from login.models import Notification
 
+
 class LandingPage(TemplateView):
     template_name = "home/home.html"
 

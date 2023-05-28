@@ -180,11 +180,13 @@ def search(query, recipes):
     recipes_query_descriptions = recipes.filter(description__contains=query)
     return (recipes | recipes_query_descriptions).distinct()
 
+
 def _get_recipes(recipe_type: str, username: str, query):
     recipes = Recipe.objects.filter(recipe_type=recipe_type, users__contains=username)
     if query:
         recipes = search(query, recipes)
     return recipes
+
 
 def _get_notifications(pk: int):
     return Notification.objects.filter(to_user=pk)
