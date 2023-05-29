@@ -5,14 +5,15 @@ permissions:
   contents: read
 
 on:
-  #push:
-  #  branches: [ "master" ]
-  #pull_request:
-  #  branches: [ "master" ]
-  workflow_run:
-    workflows: [ "Django" ]
-    types:
-      - completed
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  
+  #workflow_run:
+  #  workflows: [ "Django" ]
+  #  types:
+  #    - completed
 
 jobs:
   build:
@@ -43,3 +44,10 @@ jobs:
       run: |
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
+    - name: Update ECS Service
+      env:
+        CLUSTER: dev-cluster
+        SERVICE: community-cookbooks-dev-deployment
+      run: |
+        aws ecs update-service --cluster $CLUSTER --service $SERVICE --force-new-deployment
