@@ -21,7 +21,7 @@ class AllRecipes(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        recipes = Recipe.objects.filter(pk__contains=self.request.user.pk)
+        recipes = Recipe.objects.filter(owner=self.request.user.pk)
         notifications = Notification.objects.filter(to_user=self.request.user.pk)
         query = self.request.GET.get("q")
         if query:
@@ -37,9 +37,9 @@ class Appetizers(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        username = self.request.user.username
+        user = self.request.user
         query = self.request.GET.get("q")
-        context["appetizers"] = _get_recipes("Appetizers", username, query)
+        context["appetizers"] = _get_recipes("Appetizer", user.pk, user.username, query)
         context["notifications"] = _get_notifications(self.request.user.pk)
         return context
 
@@ -50,13 +50,10 @@ class Breakfast(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        breakfast_recipes = Recipe.objects.filter(recipe_type="Breakfast", pk__contains=self.request.user.pk)
-        notifications = Notification.objects.filter(to_user=self.request.user.pk)
+        user = self.request.user
         query = self.request.GET.get("q")
-        if query:
-            breakfast_recipes = search(query, breakfast_recipes)
-        context["breakfast"] = breakfast_recipes
-        context["notifications"] = notifications
+        context["breakfast"] = _get_recipes("Breakfast", user.pk, user.username, query)
+        context["notifications"] = _get_notifications(self.request.user.pk)
         return context
 
 
@@ -66,13 +63,10 @@ class Dinner(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        dinner_recipes = Recipe.objects.filter(recipe_type="Dinner", pk__contains=self.request.user.pk)
-        notifications = Notification.objects.filter(to_user=self.request.user.pk)
+        user = self.request.user
         query = self.request.GET.get("q")
-        if query:
-            dinner_recipes = search(query, dinner_recipes)
-        context["dinner"] = dinner_recipes
-        context["notifications"] = notifications
+        context["dinner"] = _get_recipes("Dinner", user.pk, user.username, query)
+        context["notifications"] = _get_notifications(self.request.user.pk)
         return context
 
 
@@ -82,13 +76,10 @@ class Desserts(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        desserts_recipes = Recipe.objects.filter(recipe_type="Dessert", pk__contains=self.request.user.pk)
-        notifications = Notification.objects.filter(to_user=self.request.user.pk)
+        user = self.request.user
         query = self.request.GET.get("q")
-        if query:
-            desserts_recipes = search(query, desserts_recipes)
-        context["desserts"] = desserts_recipes
-        context["notifications"] = notifications
+        context["desserts"] = _get_recipes("Dessert", user.pk, user.username, query)
+        context["notifications"] = _get_notifications(self.request.user.pk)
         return context
 
 
@@ -181,8 +172,8 @@ def search(query, recipes):
     return (recipes | recipes_query_descriptions).distinct()
 
 
-def _get_recipes(recipe_type: str, username: str, query):
-    recipes = Recipe.objects.filter(recipe_type=recipe_type, users__contains=username)
+def _get_recipes(recipe_type: str, user_pk:int, username: str, query: str):
+    recipes = Recipe.objects.filter(recipe_type=recipe_type, owner=user_pk)
     if query:
         recipes = search(query, recipes)
     return recipes

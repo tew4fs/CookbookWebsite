@@ -2,7 +2,7 @@
 .DEFAULT_GOAL := build
 
 run:
-	pipenv run python manage.py runserver
+	pipenv run python manage.py runserver 0.0.0.0:8000
 
 migrate:
 	pipenv run python manage.py migrate
