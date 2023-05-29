@@ -44,8 +44,7 @@ jobs:
     #    password: 658340567265.dkr.ecr.us-east-2.amazonaws.com
 
     - name: Login into Docker
-        run: |
-          aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 658340567265.dkr.ecr.us-east-2.amazonaws.com
+        run: aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 658340567265.dkr.ecr.us-east-2.amazonaws.com
 
     - name: Build and push
       uses: docker/build-push-action@v4
