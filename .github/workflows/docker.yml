@@ -5,14 +5,14 @@ permissions:
   contents: read
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-  #workflow_run:
-  #  workflows: [Django]
-  #  types:
-  #    - completed
+  #push:
+  #  branches: [ "master" ]
+  #pull_request:
+  #  branches: [ "master" ]
+  workflow_run:
+    workflows: [ "Django" ]
+    types:
+      - completed
 
 jobs:
   build:
