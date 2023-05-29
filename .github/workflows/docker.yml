@@ -48,7 +48,7 @@ jobs:
     - name: Update ECS Service
       env:
         CLUSTER: dev-cluster
-        SERVICE: community-cookbooks-dev-deployment
+        SERVICE: community-cookbooks-dev
       run: |
         aws ecs update-service --cluster $CLUSTER --service $SERVICE --force-new-deployment
         aws ecs wait services-stable --cluster $CLUSTER --service $SERVICE
