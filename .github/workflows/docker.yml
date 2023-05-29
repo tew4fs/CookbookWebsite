@@ -51,3 +51,4 @@ jobs:
         SERVICE: community-cookbooks-dev-deployment
       run: |
         aws ecs update-service --cluster $CLUSTER --service $SERVICE --force-new-deployment
+        aws ecs wait services-stable --cluster $CLUSTER --service $SERVICE
