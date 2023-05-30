@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-alpine
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -7,6 +7,10 @@ ENV APP_HOME=/app
 
 COPY . $APP_HOME
 WORKDIR $APP_HOME
+
+RUN apk update \
+    && apk add --virtual build-deps gcc python3-dev musl-dev \
+    && apk add postgresql-dev
 
 EXPOSE 8000
 
