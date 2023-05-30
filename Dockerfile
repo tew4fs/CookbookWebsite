@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -7,6 +7,10 @@ ENV APP_HOME=/app
 
 COPY . $APP_HOME
 WORKDIR $APP_HOME
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc python3-dev libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 8000
 
