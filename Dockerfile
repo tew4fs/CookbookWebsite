@@ -8,9 +8,9 @@ ENV APP_HOME=/app
 COPY . $APP_HOME
 WORKDIR $APP_HOME
 
-RUN apk update \
-    && apk add --virtual build-deps gcc python3-dev musl-dev \
-    && apk add postgresql-dev
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc python3-dev libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 8000
 
